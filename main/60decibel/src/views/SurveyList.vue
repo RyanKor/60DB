@@ -1,10 +1,11 @@
 <template>
   <div class="survey-history">
     <ul>
-      <li v-for="item in survey_history">
+      <router-link :to="`/stomach/${item.id}`" v-for="item in survey_history">
+        번호 : {{ item.id }}
         증상 : {{ item.symptom }}
         <small>작성일 : {{ item.created_at}}</small>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -16,8 +17,7 @@ export default {
     ...mapState(["survey_history"])
   },
   created() {
-    const authorId = this.$route.params.author;
-    this.$store.dispatch("getSurveyHistory", authorId);
+    this.$store.dispatch("getSurveyHistory");
   }
 };
 </script>
