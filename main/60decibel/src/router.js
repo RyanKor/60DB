@@ -131,7 +131,7 @@ export default new Router({
             import("./views/Result.vue")
     },
     {
-        path: "/surveys/:author",
+        path: "/surveys",
         name: "survey-history",
         component: () =>
             import("./views/SurveyList.vue")
