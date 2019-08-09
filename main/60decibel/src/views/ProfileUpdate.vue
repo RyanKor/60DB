@@ -137,7 +137,7 @@
       type="submit"
       class="button"
       name="submit"
-      @click="updateProfileInfo(update)"
+      @click="updateProfileInfo(update, profile)"
       value="프로필 업데이트"
     />
   </div>
@@ -174,7 +174,69 @@ export default {
     ...mapState(["profile"])
   },
   methods: {
-    ...mapActions(["updateProfileInfo"])
+    // ...mapActions(["updateProfileInfo"])
+    updateProfileInfo(update, profile) {
+      console.log(update)
+      console.log(profile)
+      if (!update.avatar) {
+        update.avatar = profile.avatar;
+      }
+      if (!update.gender) {
+        update.gender = profile.gender;
+      }
+      if (!update.birth_date) {
+        update.birth_date = profile.birth_date;
+      }
+      if (!update.height) {
+        update.height = profile.height;
+      }
+      if (!update.weight) {
+        update.weight = profile.weight;
+      }
+      if (!update.name) {
+        update.name = profile.name;
+      }
+      if (!update.had_checkup) {
+        update.had_checkup = profile.had_checkup;
+      }
+      if (!update.had_checkup_true) {
+        update.had_checkup_true = profile.had_checkup_true;
+      }
+      if (!update.diagnosed_disease) {
+        update.diagnosed_disease = profile.diagnosed_disease;
+      }
+      if (!update.taking_medicine) {
+        update.taking_medicine = profile.taking_medicine;
+      }
+      if (!update.what_medicine) {
+        update.what_medicine = profile.what_medicine;
+      }
+      if (!update.family_history) {
+        update.family_history = profile.family_history;
+      }
+      if (!update.drinking) {
+        update.drinking = profile.drinking;
+      }
+      if (!update.drinking_per_week) {
+        update.drinking_per_week = profile.drinking_per_week;
+      }
+      if (!update.smoking) {
+        update.smoking = profile.smoking;
+      }
+      if (!update.how_long_smoking) {
+        update.how_long_smoking = profile.how_long_smoking;
+      }
+      if (!update.how_much_smoking) {
+        update.how_much_smoking = profile.how_much_smoking;
+      }
+      if (!update.job) {
+        update.job = profile.job;
+      }
+      if (!update.relevant_data) {
+        update.relevant_data = profile.relevant_data;
+      }
+      this.$store.dispatch("updateProfileInfo", update);
+    }
   },
   created() {
     this.$store.dispatch("getProfileInfo");

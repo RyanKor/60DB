@@ -66,9 +66,6 @@ export const store = new Vuex.Store({
         SET_QUICK_START(state, startObj) {
             state.random_user = startObj;
         },
-        RESET_RANDOM_USER(state) {
-            state.random_user = undefined;
-        },
         SET_SURVEY_DATA1(state, survey_data) {
             state.answer = Object.assign(state.answer, survey_data);
         },
@@ -173,7 +170,6 @@ export const store = new Vuex.Store({
                     });
             }
         },
-
         getMemberInfo({ commit }) {
             //로컬 스토리지에 저장된 토큰을 저장한다.
             let token = localStorage.getItem("access_token");
