@@ -23,8 +23,8 @@ export const store = new Vuex.Store({
 
     state: {
         userInfo: null,
-        isLogin: false,
-        isLoginError: false,
+        isLogin: "false",
+        isLoginError: "false",
         profile: {},
         stomach: {},
         survey_history: [],
@@ -38,8 +38,8 @@ export const store = new Vuex.Store({
     },
     mutations: {
         loginSuccess(state, payload) {
-            state.isLogin = true;
-            state.isLoginError = false;
+            state.isLogin = "true";
+            state.isLoginError = "false";
             state.userInfo = payload;
         },
         loginError(state) {
@@ -94,6 +94,13 @@ export const store = new Vuex.Store({
         },
         RESET_RANDOM_USER(state) {
             state.random_user = {};
+        },
+        CHECK_LOGIN(state) {
+            {
+                state.isLogin = localStorage.getItem("isLogin");
+                state.isLoginError = localStorage.getItem("isLoginError");
+                state.userInfo = localStorage.getItem("username");
+            }
         }
     },
     actions: {
@@ -111,6 +118,7 @@ export const store = new Vuex.Store({
                     localStorage.setItem("access_token", token);
                     axios.defaults.headers.common["Authorization"] =
                         localStorage.getItem["access_token"];
+
                     this.dispatch("getMemberInfo");
                     router.push({ name: "home" });
                     console.log(res);
@@ -121,7 +129,7 @@ export const store = new Vuex.Store({
         },
         // 로그아웃 function
         logout({ commit }) {
-            commit("logout", "RESET_RANDOM_USER");
+            commit("logout");
             axios.defaults.headers.common["Authorization"] = undefined;
             router.push({ name: "home" });
             localStorage.clear();
@@ -158,8 +166,6 @@ export const store = new Vuex.Store({
                         console.log(res);
                     })
                     .catch((error) => {
-                        console.log(signupObj);
-                        console.log(error);
                         alert("이메일과 비밀번호를 확인하세요.");
                     });
             }
@@ -167,6 +173,7 @@ export const store = new Vuex.Store({
 
         getMemberInfo({ commit }) {
             //로컬 스토리지에 저장된 토큰을 저장한다.
+
             let token = localStorage.getItem("access_token");
             let config = {
                 headers: {
@@ -179,12 +186,13 @@ export const store = new Vuex.Store({
             axios
                 .get("http://54.180.144.241:8000/api/user/", config)
                 .then(response => {
-                    let userInfo = {
-                        username: response.data.username
-                    };
-                    console.log(userInfo);
+                    let userInfo = response.data.username
 
                     commit("loginSuccess", userInfo);
+
+                    localStorage.setItem('isLogin', true);
+                    localStorage.setItem('isLoginError', false);
+                    localStorage.setItem('username', userInfo);
                 })
                 .catch(() => {
                     alert("이메일과 비밀번호를 확인하세요.");
@@ -331,6 +339,14 @@ export const store = new Vuex.Store({
         },
         resetRandomUser({ commit }) {
             commit("RESET_RANDOM_USER");
+        },
+        // resetLogin({ commit }) {
+        //     commit("RESET_LOGIN")
+        // }
+        checkLogin({ commit }) {
+            let isLogin = localStorage.getItem("isLogin");
+            console.log(isLogin)
+            commit("CHECK_LOGIN");
         }
     }
 })

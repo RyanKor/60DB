@@ -6,7 +6,7 @@
           <img class="navhead-brand-logo" src="../../assets/logo.png" />
         </router-link>
       </div>
-      <div class="navhead-start" v-if="this.$store.state.isLogin === true">
+      <div class="navhead-start" v-if="this.$store.state.isLogin === 'true' ">
         <router-link to="/survey">
           <div class="start-btn">시작하기</div>
         </router-link>
@@ -15,10 +15,10 @@
         <i class="fas fa-bars fa-lg"></i>
       </div>
     </div>
-    <transition-expand v-if="this.$store.state.isLogin === true">
-      <div class="navexpand" v-if="expanded">
+    <transition-expand v-if="this.$store.state.isLogin === 'true' ">
+      <div class="navexpand">
         <a class="nav-menu">
-          <router-link to="/profiles/username">{{this.$store.state.userInfo.username}}</router-link>
+          <router-link to="/profiles">{{this.$store.state.userInfo}}</router-link>
         </a>
         <br />
         <a class="nav-menu">
@@ -36,7 +36,7 @@
     </transition-expand>
 
     <transition-expand v-else>
-      <div class="navexpand" v-if="expanded">
+      <div class="navexpand">
         <a class="nav-menu">
           <router-link to="/login">로그인</router-link>
         </a>
@@ -64,14 +64,15 @@ export default {
   },
   data() {
     return {
-      expanded: false
+      expanded: false,
+      checkLogin: false
     };
   },
   computed: {
     ...mapState(["isLogin", "isLoginError"])
   },
   methods: {
-    ...mapActions(["getMemberInfo", "logout"]),
+    ...mapActions(["logout"]),
     onClickLogout() {
       // logout 변이 실행 후 리다이렉트
       store.dispatch("logout").then(() => this.$router.push("/"));

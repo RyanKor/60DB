@@ -31,7 +31,7 @@ export default {
     ...mapState(["isLogin", "isLoginError"])
   },
   methods: {
-    ...mapActions(["getMemberInfo", "logout"])
+    ...mapActions(["logout"])
   }
 };
 </script>
