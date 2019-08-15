@@ -28,12 +28,11 @@ export const store = new Vuex.Store({
     random_user: {},
     answer: {}
   },
-  loginError(state) {
-    state.isLogin = false;
-    state.isLoginError = false;
-    state.userInfo = null;
+  getters: {
+    fetchedProfile(state) {
+      return state.profile;
+    }
   },
-
   mutations: {
     loginSuccess(state, payload) {
       state.isLogin = true;
@@ -66,9 +65,6 @@ export const store = new Vuex.Store({
     SET_QUICK_START(state, startObj) {
       state.random_user = startObj;
     },
-    RESET_RANDOM_USER(state) {
-      state.random_user = undefined;
-    },
     SET_SURVEY_DATA1(state, survey_data) {
       state.answer = Object.assign(state.answer, survey_data);
     },
@@ -92,6 +88,30 @@ export const store = new Vuex.Store({
     },
     RESET_RANDOM_USER(state) {
       state.random_user = {};
+    },
+    SWITCH_NAME(state, name) {
+      state.profile.name = name;
+    },
+    SWITCH_HEIGHT(state, height) {
+      state.profile.height = height;
+    },
+    SWITCH_WEIGHT(state, weight) {
+      state.profile.weight = weight;
+    },
+    SWITCH_WHAT_MEDICINE(state, what_medicine) {
+      state.profile.what_medicine = what_medicine;
+    },
+    SWITCH_DRINKING_PER_WEEK(state, drinking_per_week) {
+      state.profile.drinking_per_week = drinking_per_week;
+    },
+    SWITCH_HOW_LONG_SMOKING(state, how_long_smoking) {
+      state.profile.how_long_smoking = how_long_smoking;
+    },
+    SWITCH_HOW_MUCH_SMOKING(state, how_much_smoking) {
+      state.profile.how_much_smoking = how_much_smoking;
+    },
+    SWITCH_JOB(state, job) {
+      state.profile.job = job;
     }
   },
   actions: {
@@ -153,7 +173,14 @@ export const store = new Vuex.Store({
             console.log(res);
             this.dispatch("login", login_info);
             this.dispatch("resetRandomUser");
-            router.push({ name: "profileupdate" });
+            let token = localStorage.getItem("access_token");
+            let config = {
+              headers: {
+                Authorization: "JWT " + token,
+                "Content-Type": "application/json"
+              }
+            };
+            router.push({ name: "profileupdate", params: { config: config } });
           })
           .catch(() => {
             alert("이메일과 비밀번호를 확인하세요.");
@@ -168,9 +195,15 @@ export const store = new Vuex.Store({
           .then(res => {
             console.log(signupObj);
             alert("회원가입이 성공적으로 이뤄졌습니다.");
-            router.push({ name: "login" });
             console.log(res);
-            router.push({ name: "home" });
+            let token = localStorage.getItem("access_token");
+            let config = {
+              headers: {
+                Authorization: "JWT " + token,
+                "Content-Type": "application/json"
+              }
+            };
+            router.push({ name: "profileupdate", params: { config: config } });
           })
           .catch(error => {
             alert("이메일과 비밀번호를 확인하세요.");
@@ -331,10 +364,7 @@ export const store = new Vuex.Store({
       let stomachData = this.state.answer;
       axios
         .post(
-          "http://54.180.31.52:8000/api/surveys/stomach/",
-          stomachData,
-          config
-        )
+          "http://54.180.31.52:8000/api/surveys/stomach/", stomachData, config)
         .then(res => {
           console.log(res);
           let id = res.data.id;
@@ -347,6 +377,30 @@ export const store = new Vuex.Store({
     },
     resetRandomUser({ commit }) {
       commit("RESET_RANDOM_USER");
+    },
+    switchName({ commit }, name) {
+      commit("SWITCH_NAME", name);
+    },
+    switchHeight({ commit }, height) {
+      commit("SWITCH_HEIGHT", height);
+    },
+    switchWeight({ commit }, weight) {
+      commit("SWITCH_WEIGHT", weight);
+    },
+    switchWhatMedicine({ commit }, what_medicine) {
+      commit("SWITCH_WHAT_MEDICINE", what_medicine);
+    },
+    switchDrinkingPerWeek({ commit }, drinking_per_week) {
+      commit("SWITCH_DRINKING_PER_WEEK", drinking_per_week);
+    },
+    switchHowLongSmoking({ commit }, how_long_smoking) {
+      commit("SWITCH_HOW_LONG_SMOKING", how_long_smoking);
+    },
+    switchHowMuchSmoking({ commit }, how_much_smoking) {
+      commit("SWITCH_HOW_MUCH_SMOKING", how_much_smoking);
+    },
+    switchJob({ commit }, job) {
+      commit("SWITCH_JOB", job);
     }
   }
   //   axios
