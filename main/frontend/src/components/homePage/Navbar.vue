@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="navhead-btns">
-        <div class="navhead-start" v-if="this.$store.state.isLogin === true">
+        <div class="navhead-start" v-if="this.$store.state.isLogin === 'true' ">
           <router-link to="/survey">
             <div class="start-btn">시작하기</div>
           </router-link>
@@ -17,10 +17,10 @@
         </div>
       </div>
     </div>
-    <transition-expand v-if="this.$store.state.isLogin === true">
+    <transition-expand v-if="this.$store.state.isLogin === 'true' ">
       <div class="navexpand" v-if="expanded">
         <a class="nav-menu">
-          <router-link to="/profiles">{{this.$store.state.userInfo.username}}님 프로필보기</router-link>
+          <router-link to="/profiles">{{this.$store.state.userInfo}}님 프로필보기</router-link>
         </a>
         <br />
         <a class="nav-menu">
@@ -113,9 +113,9 @@ a:visited {
   cursor: pointer;
   width: 5.2rem;
   height: 32px;
-
   border-radius: 5px;
   padding: 1px;
+  margin-right: 1rem;
   background: linear-gradient(135deg, #94e2f0, #185dac);
   color: white;
   font-size: 1rem;
@@ -165,5 +165,18 @@ a:visited {
 .expand-enter,
 .expand-leave-to {
   opacity: 0;
+}
+@media (min-width: 768px) {
+  .navhead {
+    margin: 0 auto;
+    border-bottom: none;
+  }
+  .nav {
+    width: 700px;
+    margin: 0 auto;
+  }
+  .navexpand {
+    border-bottom: none;
+  }
 }
 </style>
