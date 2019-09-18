@@ -139,19 +139,35 @@ export const store = new Vuex.Store({
           // 토큰을 헤더 정보에 포함시켜서 유저 정보를 요청
           this.dispatch("getMemberInfo");
 
-          localStorage.setItem("isLogin", true);
 
-          let token = res.data.token;
-          //토큰을 로컬 스토리지에 저장
-          localStorage.setItem("access_token", token);
-          axios.defaults.headers.common["Authorization"] =
-            localStorage.getItem["access_token"];
+                    localStorage.setItem('isLogin', true);
 
-          if (loginObj.from_signup)
-            router.push({
-              name: "profileupdate"
-            });
-          else
+                    let token = res.data.token;
+                    //토큰을 로컬 스토리지에 저장
+                    localStorage.setItem("access_token", token);
+                    axios.defaults.headers.common["Authorization"] =
+                        localStorage.getItem["access_token"];
+
+
+                    if (loginObj.from_signup)
+                        router.push({
+                            name: "profileupdate"
+                        })
+                    else
+                        router.push({
+                            name: "home"
+                        });
+                })
+                .catch(() => {
+                    alert("이메일과 비밀번호를 확인하세요.");
+                });
+        },
+        // 로그아웃 function
+        logout({
+            commit
+        }) {
+            commit("logout", "RESET_RANDOM_USER");
+            axios.defaults.headers.common["Authorization"] = undefined;
             router.push({
               name: "home"
             });
@@ -266,143 +282,240 @@ export const store = new Vuex.Store({
           .catch(() => {
             localStorage.setItem("isLogin", false);
             localStorage.setItem("isLoginError", false);
+        },
+        getProfileInfo({
+            commit
+        }) {
+            let token = localStorage.getItem("access_token");
+            let config = {
+                headers: {
+                    Authorization: "JWT " + token,
+                    "Content-Type": "application/json",
+                }
+            };
+            axios
+                // .get("http://54.180.31.52:8000/api/profiles/", config)
+                .get("http://127.0.0.1:8000/api/profiles/", config)
+                .then(({
+                    data
+                }) => {
+                    commit("SET_PROFILE", data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getStomachInfo({
+            commit
+        }, stomachId) {
+            let token = localStorage.getItem("access_token");
+            let config = {
+                headers: {
+                    Authorization: "JWT " + token,
+                    "Content-Type": "application/json"
+                }
+            };
+            axios
+                // .get(`http://54.180.31.52:8000/api/stomach/${stomachId}/`, config)
+                .get(`http://127.0.0.1:8000/api/stomach/${stomachId}/`, config)
+                .then(({
+                    data
+                }) => {
+                    console.log(data);
+                    commit("SET_STOMACH", data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        getSurveyHistory({
+            commit
+        }) {
+            let token = localStorage.getItem("access_token");
+            let config = {
+                headers: {
+                    Authorization: "JWT " + token,
+                    "Content-Type": "application/json"
+                }
+            };
+            axios
+                .get("http://127.0.0.1:8000/api/surveys/", config)
+                .then(({
+                    data
+                }) => {
+                    commit("SET_SURVEY_HISTORY", data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        // 지환 : 랜덤 계정을 생성해서 회원가입 폼에 보냄
+        start({
+            commit
+        }) {
+            let startObj = {};
+            let username = "";
+            let possible =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 12; i++)
+                username += possible.charAt(
+                    Math.floor(Math.random() * possible.length)
+                );
+            let email = username;
+            let password1 = "60dbfighithing!!";
+            let password2 = password1;
 
-            commit("loginError");
-          });
-      }
-    },
-    getProfileInfo({ commit }) {
-      let token = localStorage.getItem("access_token");
-      let config = {
-        headers: {
-          Authorization: "JWT " + token,
-          "Content-Type": "application/json"
-        }
-      };
-      axios
-        // .get("http://54.180.31.52:8000/api/profiles/", config)
-        .get("http://127.0.0.1:8000/api/profiles/", config)
-        .get()
-        .then(({ data }) => {
-          commit("SET_PROFILE", data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    getStomachInfo({ commit }, stomachId) {
-      let token = localStorage.getItem("access_token");
-      let config = {
-        headers: {
-          Authorization: "JWT " + token,
-          "Content-Type": "application/json"
-        }
-      };
-      axios
-        // .get(`http://54.180.31.52:8000/api/stomach/${stomachId}/`, config)
-        .get(`http://127.0.0.1:8000/api/stomach/${stomachId}/`, config)
-        .then(({ data }) => {
-          console.log(data);
-          commit("SET_STOMACH", data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    getSurveyHistory({ commit }, authorId) {
-      let token = localStorage.getItem("access_token");
-      let config = {
-        headers: {
-          Authorization: "JWT " + token,
-          "Content-Type": "application/json"
-        }
-      };
-      axios
-        // .get(`http://54.180.31.52:8000/api/surveys/${authorId}/`, config)
-        .get(`http://127.0.0.1:8000/api/surveys/${authorId}/`, config)
-        .then(({ data }) => {
-          commit("SET_SURVEY_HISTORY", data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    // 지환 : 랜덤 계정을 생성해서 회원가입 폼에 보냄
-    start({ commit }) {
-      let startObj = {};
-      let username = "";
-      let possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < 12; i++)
-        username += possible.charAt(
-          Math.floor(Math.random() * possible.length)
-        );
-      let email = username;
-      let password1 = "60dbfighithing!!";
-      let password2 = password1;
+            startObj["username"] = username;
+            startObj["email"] = email + "@naver.com";
+            startObj["password1"] = password1;
+            startObj["password2"] = password2;
+            commit("SET_QUICK_START", startObj);
+            router.push({
+                name: "signup"
+            });
+        },
+        updateProfileInfo(dispatch, update) {
+            let token = localStorage.getItem("access_token");
+            let config = {
+                headers: {
+                    Authorization: "JWT " + token,
+                    "Content-Type": "application/json"
+                }
+            };
+            axios
+                // .put("http://54.180.31.52:8000/api/profileupdate/", update, config)
+                .put("http://127.0.0.1:8000/api/profileupdate/", update, config)
+                .then(res => {
+                    console.log(res);
+                    router.push({
+                        name: "profiles"
+                    });
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                });
+        },
+        setSurveyData1({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA1", survey_data);
+            console.log(survey_data);
+            console.log(this.state.answer);
+        },
+        setSurveyData2({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA2", survey_data);
+            console.log(this.state.answer);
+        },
+        setSurveyData3({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA3", survey_data);
+            console.log(this.state.answer);
+        },
+        setSurveyData4({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA4", survey_data);
+            console.log(this.state.answer);
+        },
+        setSurveyData5({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA5", survey_data);
+            console.log(this.state.answer);
+        },
+        setSurveyData6({
+            commit
+        }, survey_data) {
+            commit("SET_SURVEY_DATA6", survey_data);
+            console.log(this.state.answer);
+            this.dispatch("shootSurveyData");
+        },
+        shootSurveyData({
+            commit
+        }) {
+            let token = localStorage.getItem("access_token");
+            let config = {
+                headers: {
+                    Authorization: "JWT " + token,
+                    "Content-Type": "application/json"
+                }
+            };
+            let stomachData = this.state.answer;
+            axios
+                .post(
+                    // "http://54.180.31.52:8000/api/surveys/stomach/", stomachData, config)
+                    "http://127.0.0.1:8000/api/surveys/stomach/", stomachData, config)
 
-      startObj["username"] = username;
-      startObj["email"] = email + "@naver.com";
-      startObj["password1"] = password1;
-      startObj["password2"] = password2;
-      commit("SET_QUICK_START", startObj);
-      router.push({
-        name: "signup"
-      });
-    },
-    updateProfileInfo(dispatch, update) {
-      let token = localStorage.getItem("access_token");
-      let config = {
-        headers: {
-          Authorization: "JWT " + token,
-          "Content-Type": "application/json"
-        }
-      };
-      axios
-        // .put("http://54.180.31.52:8000/api/profileupdate/", update, config)
-        .put("http://127.0.0.1:8000/api/profileupdate/", update, config)
-        .then(res => {
-          console.log(res);
-          router.push({
-            name: "profiles"
-          });
-        })
-        .catch(error => {
-          console.log(error.response.data);
-        });
-    },
-    setSurveyData1({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA1", survey_data);
-      console.log(survey_data);
-      console.log(this.state.answer);
-    },
-    setSurveyData2({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA2", survey_data);
-      console.log(this.state.answer);
-    },
-    setSurveyData3({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA3", survey_data);
-      console.log(this.state.answer);
-    },
-    setSurveyData4({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA4", survey_data);
-      console.log(this.state.answer);
-    },
-    setSurveyData5({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA5", survey_data);
-      console.log(this.state.answer);
-    },
-    setSurveyData6({ commit }, survey_data) {
-      commit("SET_SURVEY_DATA6", survey_data);
-      console.log(this.state.answer);
-      this.dispatch("shootSurveyData");
-    },
-    shootSurveyData({ commit }) {
-      let token = localStorage.getItem("access_token");
-      let config = {
-        headers: {
-          Authorization: "JWT " + token,
-          "Content-Type": "application/json"
+                .then(res => {
+                    console.log(res);
+                    let id = res.data.id;
+                    commit("RESET_SURVEY");
+                    router.push({
+                        path: `/stomach/${id}`
+                    });
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                });
+        },
+        resetRandomUser({
+            commit
+        }) {
+            commit("RESET_RANDOM_USER");
+        },
+        alreadyLogin({
+            commit
+        }) {
+            console.log("로그인이 되어있을때")
+            commit("ALREADY_LOGIN");
+        },
+        switchName({
+            commit
+        }, name) {
+            commit("SWITCH_NAME", name);
+        },
+        switchHeight({
+            commit
+        }, height) {
+            commit("SWITCH_HEIGHT", height);
+        },
+        switchWeight({
+            commit
+        }, weight) {
+            commit("SWITCH_WEIGHT", weight);
+        },
+        switchWhatMedicine({
+            commit
+        }, what_medicine) {
+            commit("SWITCH_WHAT_MEDICINE", what_medicine);
+        },
+        switchDrinkingPerWeek({
+            commit
+        }, drinking_per_week) {
+            commit("SWITCH_DRINKING_PER_WEEK", drinking_per_week);
+        },
+        switchHowLongSmoking({
+            commit
+        }, how_long_smoking) {
+            commit("SWITCH_HOW_LONG_SMOKING", how_long_smoking);
+        },
+        switchHowMuchSmoking({
+            commit
+        }, how_much_smoking) {
+            commit("SWITCH_HOW_MUCH_SMOKING", how_much_smoking);
+        },
+        switchJob({
+            commit
+        }, job) {
+            commit("SWITCH_JOB", job);
+        },
+        switchAvatar({
+            commit
+        }, avatar) {
+            commit("SWITCH_AVATAR", avatar);
         }
       };
       let stomachData = this.state.answer;
