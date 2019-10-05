@@ -60,11 +60,11 @@ export default {
 .profiletitle {
   color: rgb(80, 80, 80);
   font-weight: 800;
-  width: 40%;
+  width: 45%;
   border-right: 2px solid rgba(197, 197, 197, 0.507);
 }
 .profiledetail {
-  padding-left: 3rem;
+  padding-left: 2rem;
 }
 .txt-head {
   color: #397979;

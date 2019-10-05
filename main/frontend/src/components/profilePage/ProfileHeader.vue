@@ -140,7 +140,7 @@ img {
   text-align: center;
 }
 .box-body {
-  color: rgb(196, 30, 99);
+  color: rgb(16, 45, 126);
   font-size: 1.6rem;
   text-align: center;
   width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
-    <navbar class="nav" />
     <div class="wrap">
+      <navbar class="nav" />
       <prof-header class="header" @header="childMounted" />
       <prof-body2 class="body2" @body2="childMounted" />
       <prof-body3 class="body3" @body3="childMounted" />
@@ -18,7 +18,6 @@ import ProfFooter from "../components/profilePage/ProfileFooter.vue";
 
 import bus from "../utils/bus.js";
 export default {
-<<<<<<< HEAD
   components: {
     Navbar,
     ProfHeader,
@@ -33,7 +32,7 @@ export default {
   },
   watch: {
     check: function(check) {
-      if (check >= 3) bus.$emit("off:progress");
+      if (check >= 3) this.$store.commit("SET_LOADING", false);
     }
   },
   methods: {
@@ -41,30 +40,6 @@ export default {
       this.check++;
     }
   }
-=======
-	components: {
-		Navbar,
-		ProfHeader,
-		ProfBody2,
-		ProfBody3,
-		ProfFooter,
-	},
-	data() {
-		return {
-			check: 0,
-		};
-	},
-	watch: {
-		check: function(check) {
-			if (check >= 3) this.$store.commit('SET_LOADING', false);
-		},
-	},
-	methods: {
-		childMounted() {
-			this.check++;
-		},
-	},
->>>>>>> debab7bcf834ee716141c893ad3ad7e5691bc6eb
 };
 </script>
 <style scoped>
@@ -90,9 +65,13 @@ export default {
 
 /* layout */
 .profile {
-  background: linear-gradient(-45deg, #ea5455, #feb692);
+  display: flex;
+  justify-content: center;
 }
-
+.wrap {
+  width: 100%;
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+}
 .header {
   background-color: transparent;
   width: 100%;

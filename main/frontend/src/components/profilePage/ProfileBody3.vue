@@ -20,7 +20,7 @@
         <div
           v-if="profile.how_much_smoking"
           class="profiledetail2"
-        >일주일 {{ profile.how_much_smoking }}갑</div>
+        >{{ profile.how_much_smoking }}갑(주)</div>
       </div>
       <!-- 직업 -->
       <div class="profileinfo">
@@ -66,12 +66,13 @@ export default {
 .profiletitle {
   color: rgb(80, 80, 80);
   font-weight: 800;
-  width: 40%;
+  width: 45%;
   border-right: 2px solid rgba(197, 197, 197, 0.507);
 }
 .profiledetail {
-  padding-left: 3rem;
+  padding-left: 1rem;
 }
+
 .button {
   color: white;
 }
