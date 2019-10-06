@@ -12,7 +12,7 @@
 			<!-- 음주 -->
 			<div class="profileinfo">
 				<div class="profiletitle">흡연습관</div>
-				<div v-if="`${profile.how_long_smoking}`" class="profiledetail">
+				<div v-if="profile.how_long_smoking" class="profiledetail">
 					{{ profile.how_long_smoking }}년 /
 				</div>
 				<div v-if="profile.how_much_smoking" class="profiledetail2">
@@ -35,9 +35,6 @@ export default {
 	computed: {
 		...mapState(['profile']),
 	},
-	// updated() {
-	// 	this.$emit('body3');
-	// },
 };
 </script>
 

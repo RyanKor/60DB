@@ -14,32 +14,21 @@ import {
 } from '../api/axios.js';
 
 export default {
-	//   로그인 function
 	login({ commit }, loginObj) {
-		// login --> 토큰 반환
 		Login(loginObj)
-			// loginObj = {email,password}
 			.then(async res => {
-				//토큰을 로컬 스토리지에 저장
 				localStorage.setItem('access_token', res.data.token);
 
-				axios.defaults.headers.common['Authorization'] = localStorage.getItem['access_token'];
+				axios.defaults.headers.common['Authorization'] = res.data.token;
 
-				await this.dispatch('getMemberInfo');
-
-				commit('SET_LOADING', true);
-
-				setTimeout(function() {
-					commit('SET_LOADING', false);
-					if (loginObj.from_signup) {
-						router.push({
-							name: 'profileupdate',
-						});
-					} else
-						router.push({
-							name: 'home',
-						});
-				}, 500);
+				if (loginObj.from_signup) {
+					router.push({
+						name: 'profileupdate',
+					});
+				} else
+					router.push({
+						name: 'home',
+					});
 			})
 			.catch(() => {
 				alert('이메일과 비밀번호를 확인하세요.');
@@ -62,14 +51,8 @@ export default {
 			});
 	},
 	getMemberInfo({ commit }) {
-		//로컬 스토리지에 저장된 토큰을 저장한다.
 		if (!localStorage.getItem('access_token')) {
-			// localStorage.setItem('isLogin', false);
-			// localStorage.setItem('isLoginError', false);
 			commit('loginNotYet');
-			return new Promise((resolve, reject) => {
-				resolve();
-			});
 		} else {
 			let token = localStorage.getItem('access_token');
 			let config = {
@@ -78,29 +61,14 @@ export default {
 					'Content-Type': 'application/json',
 				},
 			};
-			//토큰 -> 멤버 정보 반환
-			//새로고침 --> 토큰만 갖고 멤버 정보 요청가능
 			getMemberInfo(config)
 				.then(response => {
 					let userInfo = response.data.username;
 
-					// localStorage.setItem('isLogin', true);
-					// localStorage.setItem('isLoginError', false);
-
 					commit('loginSuccess', userInfo);
-
-					return new Promise((resolve, reject) => {
-						resolve();
-					});
 				})
 				.catch(() => {
-					// localStorage.setItem('isLogin', false);
-					// localStorage.setItem('isLoginError', true);
-					// alert('세션이 만료 되었습니다');
 					commit('loginError');
-					return new Promise((resolve, reject) => {
-						resolve();
-					});
 				});
 		}
 	},
@@ -137,7 +105,6 @@ export default {
 				});
 		} else {
 			Signup(signupObj)
-				// loginObj = {email,password}
 				.then(res => {
 					console.log(signupObj);
 					let login_info = {};
@@ -154,8 +121,6 @@ export default {
 					console.log(err.response);
 					if (err.response.data.username) alert('이미 존재하는 아이디입니다');
 					else if (err.response.data.email) alert('이미 존재하는 이메일입니다');
-					// else if (err.response.data.password)
-					//     alert("패스워드가 같지 않습니다.");
 					else if (err.response.data.non_field_errors) alert('패스워드가 같지 않습니다.');
 					else if (err.response.data.password1) {
 						alert(err.response.data.password1[0]);
