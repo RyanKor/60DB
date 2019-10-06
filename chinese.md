@@ -190,7 +190,7 @@ Components描绘.
   
   
 
- **5.2) 系统架构 **
+ **5.2) 系统架构**
 
 ![img](https://miro.medium.com/max/3200/1*jw3YdTOarDsLg-iWs1sJ5w.png)
 
