@@ -35,8 +35,9 @@
 ##### 1.1) 문서를 시작하기 전에
 
 - 다양한 커뮤니티의 개발자의 유입을 위해 한국어, 영어, 중국어로 해당 문서를 작성했다.
-  - 영문 문서는 english.md / 중문 문서는 chineses.md 참고
-
+  
+- 영문 문서는 english.md / 중문 문서는 chineses.md 참고
+  
 - 스택 구성
 
   - Frontend는 Vue.js & Backend는 DRF(Django Rest Framework)를 사용했습니다.
@@ -66,6 +67,13 @@
 > python -m venv 60db (가상환경 설치. pipenv or virtualenv 어떤 것이든 사용가능)
 > source 60db/Script/activate
 > (60db) pip install -r requirements.txt (백엔드 모듈 관련 부분 설치)
+> cd main (manage.py가 위치한 폴더로 이동)
+> profiles, survey, users app내에 migrations 폴더를 만든다.
+> __init__.py를 migrations 폴더마다 만들어준다..
+> (다시 manage.py 파일이 위치한 폴더로 이동한 후) python manage.py makemigrations
+> python manage.py migrate
+> python manage.py createsuperuser
+> (관리자 계정 생성 이후) python manage.py runserver.
 ```
 
 - 원활한 소프트웨어 활용을 위해 Package.json 과 requirements.txt에 명시된 모듈들을 모두 설치해주십시오.
