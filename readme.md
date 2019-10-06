@@ -34,6 +34,9 @@
 
 ##### 1.1) 문서를 시작하기 전에
 
+- 다양한 커뮤니티의 개발자의 유입을 위해 한국어, 영어, 중국어로 해당 문서를 작성했다.
+  - 영문 문서는 english.md / 중문 문서는 chineses.md 참고
+
 - 스택 구성
 
   - Frontend는 Vue.js & Backend는 DRF(Django Rest Framework)를 사용했습니다.
