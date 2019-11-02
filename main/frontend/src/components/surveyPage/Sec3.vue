@@ -114,7 +114,7 @@
             <p class="question">증상 후 통증이 완화되나요?</p>
             <br />
             <div class="answers-box animate fadeInRightBig three">
-              <div v-for="item in worse" :key="item.id">
+              <div v-for="item in relieve" :key="item.id">
                 <button
                   value="after meal"
                   @click="button_click_multiple('factor', item)"
