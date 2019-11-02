@@ -1,11 +1,11 @@
 <template>
   <div class="profile">
+    <navbar class="nav" />
     <div class="wrap">
-      <navbar class="nav" />
-      <prof-header class="header" @header="childMounted" />
-      <prof-body2 class="body2" @body2="childMounted" />
-      <prof-body3 class="body3" @body3="childMounted" />
-      <prof-footer class="footer" @footer="childMounted" />
+      <prof-header class="header" />
+      <prof-body2 class="body2" />
+      <prof-body3 class="body3" />
+      <prof-footer class="footer" />
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ import ProfBody2 from "../components/profilePage/ProfileBody2.vue";
 import ProfBody3 from "../components/profilePage/ProfileBody3.vue";
 import ProfFooter from "../components/profilePage/ProfileFooter.vue";
 
-import bus from "../utils/bus.js";
+// import bus from '../utils/bus.js';
 export default {
   components: {
     Navbar,
@@ -30,16 +30,19 @@ export default {
       check: 0
     };
   },
-  watch: {
-    check: function(check) {
-      if (check >= 3) this.$store.commit("SET_LOADING", false);
-    }
-  },
-  methods: {
-    childMounted() {
-      this.check++;
-    }
+  mounted() {
+    this.$store.commit("SET_LOADING", false);
   }
+  // watch: {
+  // 	check: function(check) {
+  // 		if (check >= 3) this.$store.commit('SET_LOADING', false);
+  // 	},
+  // },
+  // methods: {
+  // 	childMounted() {
+  // 		this.check++;
+  // 	},
+  // },
 };
 </script>
 <style scoped>
@@ -65,12 +68,7 @@ export default {
 
 /* layout */
 .profile {
-  display: flex;
-  justify-content: center;
-}
-.wrap {
-  width: 100%;
-  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+  background: linear-gradient(-45deg, #ea5455, #feb692);
 }
 .header {
   background-color: transparent;

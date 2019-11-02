@@ -55,10 +55,10 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["profile"])
-  },
-  updated() {
-    this.$emit("header");
   }
+  // updated() {
+  // 	this.$emit('header');
+  // },
 };
 </script>
 <style scoped>
@@ -140,7 +140,7 @@ img {
   text-align: center;
 }
 .box-body {
-  color: rgb(16, 45, 126);
+  color: rgb(196, 30, 99);
   font-size: 1.6rem;
   text-align: center;
   width: 100%;

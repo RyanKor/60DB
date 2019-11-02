@@ -37,10 +37,10 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["profile"])
-  },
-  updated() {
-    this.$emit("body2");
   }
+  // updated() {
+  // 	this.$emit('body2');
+  // },
 };
 </script>
 
@@ -60,11 +60,11 @@ export default {
 .profiletitle {
   color: rgb(80, 80, 80);
   font-weight: 800;
-  width: 45%;
+  width: 40%;
   border-right: 2px solid rgba(197, 197, 197, 0.507);
 }
 .profiledetail {
-  padding-left: 2rem;
+  padding-left: 3rem;
 }
 .txt-head {
   color: #397979;

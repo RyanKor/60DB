@@ -20,7 +20,7 @@
         <div
           v-if="profile.how_much_smoking"
           class="profiledetail2"
-        >{{ profile.how_much_smoking }}갑(주)</div>
+        >일주일 {{ profile.how_much_smoking }}갑</div>
       </div>
       <!-- 직업 -->
       <div class="profileinfo">
@@ -37,10 +37,10 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["profile"])
-  },
-  updated() {
-    this.$emit("body3");
   }
+  // updated() {
+  // 	this.$emit('body3');
+  // },
 };
 </script>
 
@@ -66,11 +66,11 @@ export default {
 .profiletitle {
   color: rgb(80, 80, 80);
   font-weight: 800;
-  width: 45%;
+  width: 40%;
   border-right: 2px solid rgba(197, 197, 197, 0.507);
 }
 .profiledetail {
-  padding-left: 1rem;
+  padding-left: 3rem;
 }
 
 .button {

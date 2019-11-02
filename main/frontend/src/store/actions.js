@@ -1,5 +1,5 @@
 import axios from 'axios';
-import router from '../router';
+import router from '../router/router';
 
 import {
 	Login,
@@ -19,24 +19,27 @@ export default {
 		// login --> 토큰 반환
 		Login(loginObj)
 			// loginObj = {email,password}
-			.then(res => {
-				this.dispatch('getMemberInfo');
-
-				localStorage.setItem('isLogin', true);
-
-				let token = res.data.token;
+			.then(async res => {
 				//토큰을 로컬 스토리지에 저장
-				localStorage.setItem('access_token', token);
+				localStorage.setItem('access_token', res.data.token);
+
 				axios.defaults.headers.common['Authorization'] = localStorage.getItem['access_token'];
 
-				if (loginObj.from_signup)
-					router.push({
-						name: 'profileupdate',
-					});
-				else
-					router.push({
-						name: 'home',
-					});
+				await this.dispatch('getMemberInfo');
+
+				commit('SET_LOADING', true);
+
+				setTimeout(function() {
+					commit('SET_LOADING', false);
+					if (loginObj.from_signup) {
+						router.push({
+							name: 'profileupdate',
+						});
+					} else
+						router.push({
+							name: 'home',
+						});
+				}, 500);
 			})
 			.catch(() => {
 				alert('이메일과 비밀번호를 확인하세요.');
@@ -44,14 +47,12 @@ export default {
 	},
 	// 로그아웃 function
 	logout({ commit }) {
-		// axios.post("http://localhost:8000/api/rest-auth/logout/", this.state.userInfo)
 		Logout(this.state.userInfo)
 			.then(res => {
 				alert('로그아웃이 성공적으로 이루어졌습니다.');
 				commit('logout', 'RESET_RANDOM_USER');
 				axios.defaults.headers.common['Authorization'] = undefined;
 				localStorage.clear();
-				// location.href = "/"
 				router.push({
 					name: 'home',
 				});
@@ -59,6 +60,49 @@ export default {
 			.catch(err => {
 				console.log(err);
 			});
+	},
+	getMemberInfo({ commit }) {
+		//로컬 스토리지에 저장된 토큰을 저장한다.
+		if (!localStorage.getItem('access_token')) {
+			// localStorage.setItem('isLogin', false);
+			// localStorage.setItem('isLoginError', false);
+			commit('loginNotYet');
+			return new Promise((resolve, reject) => {
+				resolve();
+			});
+		} else {
+			let token = localStorage.getItem('access_token');
+			let config = {
+				headers: {
+					Authorization: 'JWT ' + token,
+					'Content-Type': 'application/json',
+				},
+			};
+			//토큰 -> 멤버 정보 반환
+			//새로고침 --> 토큰만 갖고 멤버 정보 요청가능
+			getMemberInfo(config)
+				.then(response => {
+					let userInfo = response.data.username;
+
+					// localStorage.setItem('isLogin', true);
+					// localStorage.setItem('isLoginError', false);
+
+					commit('loginSuccess', userInfo);
+
+					return new Promise((resolve, reject) => {
+						resolve();
+					});
+				})
+				.catch(() => {
+					// localStorage.setItem('isLogin', false);
+					// localStorage.setItem('isLoginError', true);
+					// alert('세션이 만료 되었습니다');
+					commit('loginError');
+					return new Promise((resolve, reject) => {
+						resolve();
+					});
+				});
+		}
 	},
 	signup(dispatch, signupObj) {
 		// login --> 토큰 반환
@@ -82,11 +126,11 @@ export default {
 			login_info['from_signup'] = true;
 
 			Signup(quickLogin)
-				.then(res => {
+				.then(async res => {
+					await this.dispatch('resetRandomUser');
 					alert('회원가입이 성공적으로 이뤄졌습니다.');
-					console.log(res);
 					this.dispatch('login', login_info);
-					this.dispatch('resetRandomUser');
+					console.log(res);
 				})
 				.catch(() => {
 					alert('이메일과 비밀번호를 확인하세요.');
@@ -96,12 +140,14 @@ export default {
 				// loginObj = {email,password}
 				.then(res => {
 					console.log(signupObj);
-					alert('회원가입이 성공적으로 이뤄졌습니다.');
 					let login_info = {};
 
 					login_info['username'] = signupObj.username;
 					login_info['password'] = signupObj.password1;
 					login_info['from_signup'] = true;
+
+					alert('회원가입이 성공적으로 이뤄졌습니다.');
+
 					this.dispatch('login', login_info);
 				})
 				.catch(err => {
@@ -124,38 +170,7 @@ export default {
 		commit('SET_SURVEY_DATA', survey_data);
 		dispatch('shootSurveyData', this.state.answer);
 	},
-	getMemberInfo({ commit }) {
-		//로컬 스토리지에 저장된 토큰을 저장한다.
-		if (!localStorage.getItem('access_token')) {
-			commit('loginNotYet');
-		} else {
-			let token = localStorage.getItem('access_token');
-			let config = {
-				headers: {
-					Authorization: 'JWT ' + token,
-					'Content-Type': 'application/json',
-				},
-			};
-			//토큰 -> 멤버 정보 반환
-			//새로고침 --> 토큰만 갖고 멤버 정보 요청가능
-			getMemberInfo(config)
-				.then(response => {
-					localStorage.setItem('isLogin', true);
-					localStorage.setItem('isLoginError', false);
-					localStorage.setItem('username', userInfo);
 
-					let userInfo = response.data.username;
-
-					commit('loginSuccess', userInfo);
-				})
-				.catch(() => {
-					localStorage.setItem('isLogin', false);
-					localStorage.setItem('isLoginError', false);
-
-					commit('loginError');
-				});
-		}
-	},
 	getProfileInfo({ commit }) {
 		let token = localStorage.getItem('access_token');
 		let config = {
@@ -168,9 +183,15 @@ export default {
 		getProfileInfo(config)
 			.then(({ data }) => {
 				commit('SET_PROFILE', data);
+				return new Promise(function(resolve, reject) {
+					resolve(10);
+				});
 			})
 			.catch(error => {
 				console.log(error);
+				return new Promise((resolve, reject) => {
+					reject();
+				});
 			});
 	},
 	getStomachInfo({ commit }, stomachId) {
@@ -186,6 +207,9 @@ export default {
 			.then(({ data }) => {
 				console.log(data);
 				commit('SET_STOMACH', data);
+				return new Promise((resolve, rejcet) => {
+					resolve();
+				});
 			})
 			.catch(error => {
 				console.log(error);
@@ -202,6 +226,9 @@ export default {
 		getSurveyHistory(config)
 			.then(({ data }) => {
 				commit('SET_SURVEY_HISTORY', data);
+				return new Promise((resolve, reject) => {
+					resolve();
+				});
 			})
 			.catch(error => {
 				console.log(error);
@@ -236,8 +263,7 @@ export default {
 			},
 		};
 		updateProfileInfo(config, update)
-			.then(res => {
-				console.log(res);
+			.then(() => {
 				router.push({
 					name: 'profiles',
 				});

@@ -43,10 +43,10 @@ export default {
   computed: {
     ...mapState(["profile"]),
     ...mapState(["stomach"])
-  },
-  updated() {
-    this.$emit("successMount");
   }
+  // updated() {
+  // 	this.$emit('successMount');
+  // },
 };
 </script>
 
