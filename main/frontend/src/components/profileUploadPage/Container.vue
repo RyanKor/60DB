@@ -12,7 +12,7 @@
 					</div>
 					<div class="upload-info">
 						<span>이름</span>
-						<input type="text" ref="name" v-model="update.name" />
+						<input type="text" ref="name" v-model="update.name" placeholder="ex)홍길동"/>
 						<br />
 						<span>성별</span>
 						<form>
@@ -43,10 +43,10 @@
 						<span>생년월일</span>
 						<input type="date" v-model="update.birth_date" class="input-birth" />
 						<br />
-						<span>신장</span>
+						<span>신장(cm)</span>
 						<input type="number" ref="height" v-model="update.height" />
 						<br />
-						<span>체중</span>
+						<span>체중(kg)</span>
 						<input type="number" ref="weight" v-model="update.weight" />
 						<br />
 					</div>
@@ -78,8 +78,9 @@
 						/>없음
 					</label>
 					<br />
-					<span class="span2" for="had_long_before">건강검진 시기</span>
+					<span class="span2" for="had_long_before">마지막으로 건강검진 받은 시기</span>
 					<br />
+
 					<input
 						class="select selectline"
 						type="radio"
@@ -101,6 +102,8 @@
 						value="5-10년"
 					/>5~10년
 					<br />
+					<span>이상소견</span>
+					<input type="text" ref="feedback" v-model="update.feedback" placeholder="ex)갑상선 수치에 이상이 있어요"/>
 					<span class="span2" for="disease_list">병 진단 이력</span>
 					<br />
 					<input
