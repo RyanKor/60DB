@@ -97,7 +97,7 @@
               <div v-for="item in worse" :key="item.id">
                 <button
                   value="after meal"
-                  @click="button_click_multiple('factor', item)"
+                  @click="button_click_multiple('worse_factor', item)"
                   class="answer-box"
                 >{{item}}</button>
                 <br />
@@ -117,7 +117,7 @@
               <div v-for="item in relieve" :key="item.id">
                 <button
                   value="after meal"
-                  @click="button_click_multiple('factor', item)"
+                  @click="button_click_multiple('relieve_factor', item)"
                   class="answer-box"
                 >{{item}}</button>
                 <br />
@@ -189,7 +189,8 @@ export default {
       off: true,
       expand: 0,
       survey_data: {
-        factor: [],
+        worse_factor: [],
+        relieve_factor: [],
         pain_repeated: "",
         pain_how_often_day: "",
         pain_how_often_many: ""
