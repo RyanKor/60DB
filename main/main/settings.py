@@ -77,7 +77,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         # 인우 : Vue 쓰면서 템플릿을 안 쓰게 됬으니 지워도 될 것 같습니다.
         # 'DIRS': [] <-이렇게
         'APP_DIRS': True,
@@ -106,7 +106,6 @@ DATABASES = {
 }
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-    # "http://127.0.0.1:8080",
     "http://127.0.0.1:8000",
     "http://localhost:8080"
 ]

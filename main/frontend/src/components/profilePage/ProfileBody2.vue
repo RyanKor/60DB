@@ -5,22 +5,16 @@
       <!-- 건강검진 이력 -->
       <div class="profileinfo">
         <div class="profiletitle">최근 건강 검진</div>
-        <div
-          v-if="`${profile.had_checkup}==='True'`"
-          class="profiledetail"
-        >{{ profile.had_checkup_true }} 전</div>
+        <div v-if="profile.had_checkup" class="profiledetail">{{ profile.had_checkup_true }} 전</div>
       </div>
       <div class="profileinfo">
         <div class="profiletitle">최근 진단 병명</div>
-        <div v-if="profile.had_checkup_true" class="profiledetail">{{ profile.diagnosed_disease }}</div>
+        <div v-if="profile.had_checkup" class="profiledetail">{{ profile.diagnosed_disease }}</div>
       </div>
       <!-- 복용약 -->
       <div class="profileinfo">
         <div class="profiletitle">복용약</div>
-        <div
-          v-if="`${profile.taking_medicine}=='True'`"
-          class="profiledetail"
-        >{{ profile.what_medicine }}</div>
+        <div v-if="profile.taking_medicine" class="profiledetail">{{ profile.what_medicine }}</div>
       </div>
       <!-- 가족력 -->
       <div class="profileinfo">
@@ -38,9 +32,6 @@ export default {
   computed: {
     ...mapState(["profile"])
   }
-  // updated() {
-  // 	this.$emit('body2');
-  // },
 };
 </script>
 

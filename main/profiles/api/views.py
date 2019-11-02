@@ -29,8 +29,3 @@ class ProfileUpdateAPIView(generics.UpdateAPIView):
         profile_object = self.request.user.profile
         return profile_object
 
-# class ProfileViewSet(mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-#     queryset = Profile.objects.all()
-#     serializer_class = ProfileSerializer
-#     permission_classes = [IsOwnerOnly]
-#     lookup_field = "user"
