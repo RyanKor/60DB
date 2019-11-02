@@ -108,10 +108,14 @@
             <div class="answers">
               <div class="answer animate fadeInRightBig three">
                 <input
-                  type="text"
-                  v-model="survey_data.pain_spread_where"
-                  class="ans-txt"
-                  placeholder="예) 주변으로, "
+                type="text"
+                v-model="survey_data.pain_spread_where"
+                class="ans-txt"
+                <<<<<<< HEAD
+                placeholder="예) 주변으로, "
+                =======
+                placeholder="예)등 뒤로 퍼져요"
+                >>>>>>> f0bfc92292e1e3d087ef01f9a7c0c560ec62b03d
                 />
               </div>
             </div>
@@ -144,7 +148,11 @@ export default {
       ],
       move: [["예", "True"], ["아니오", "False"]],
       spread: [["예", "True"], ["아니오", "False"]],
+<<<<<<< HEAD
       expand: [0, 1, 3],
+=======
+      expand: 0,
+>>>>>>> f0bfc92292e1e3d087ef01f9a7c0c560ec62b03d
       survey_data: {
         symptom_location: [],
         location_move: "",
@@ -258,6 +266,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  <<<<<<<HEAD
+=======
+  position: absolute;
+  >>>>>>>f0bfc92292e1e3d087ef01f9a7c0c560ec62b03d
   bottom: 0;
   box-shadow: 1px 0.8px 3px -0.5px rgb(128, 128, 128);
   background-color: #125b7f;
