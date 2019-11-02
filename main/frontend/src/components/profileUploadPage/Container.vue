@@ -1,61 +1,61 @@
 <template>
-	<div class="form">
-		<form method="put" enctype="multipart/form-data">
-			<!-------- 기본 정보 -------->
-			<div class="cont1">
-				<div class="upload-title">기본 정보</div>
-				<div class="upload-detail">
-					<div class="upload-img">
-						<div class="bold">프로필 이미지</div>
-						<br />
-						<img src="../../assets/user.png" alt="사용자 기본 프로필" class="img" />
-					</div>
-					<div class="upload-info">
-						<span>이름</span>
-						<input type="text" ref="name" v-model="update.name" placeholder="ex)홍길동"/>
-						<br />
-						<span>성별</span>
-						<form>
-							<label for="male">
-								<input
-									class="select"
-									type="radio"
-									ref="male"
-									v-model="update.gender"
-									name="gender"
-									id="male"
-									value="남성"
-								/>남성
-							</label>
-							<label for="female">
-								<input
-									class="select"
-									type="radio"
-									ref="female"
-									v-model="update.gender"
-									name="gender"
-									id="female"
-									value="여성"
-								/>여성
-							</label>
-						</form>
-						<br />
-						<span>생년월일</span>
-						<input type="date" v-model="update.birth_date" class="input-birth" />
-						<br />
-						<span>신장(cm)</span>
-						<input type="number" ref="height" v-model="update.height" />
-						<br />
-						<span>체중(kg)</span>
-						<input type="number" ref="weight" v-model="update.weight" />
-						<br />
-					</div>
-				</div>
-			</div>
-			<!-------- 과거력 -------->
-			<div class="cont2">
-				<div class="upload-title">과거력</div>
-				<div class="upload-detail2">
+  <div class="form">
+    <form method="put" enctype="multipart/form-data">
+      <!-------- 기본 정보 -------->
+      <div class="cont1">
+        <div class="upload-title">기본 정보</div>
+        <div class="upload-detail">
+          <div class="upload-img">
+            <div class="bold">프로필 이미지</div>
+            <br />
+            <img src="../../assets/user.png" alt="사용자 기본 프로필" class="img" />
+          </div>
+          <div class="upload-info">
+            <span>이름</span>
+            <input type="text" ref="name" v-model="update.name" placeholder="ex)홍길동"/>
+            <br />
+            <span>성별</span>
+            <form>
+              <label for="male">
+                <input
+                  class="select"
+                  type="radio"
+                  ref="male"
+                  v-model="update.gender"
+                  name="gender"
+                  id="male"
+                  value="남성"
+                />남성
+              </label>
+              <label for="female">
+                <input
+                  class="select"
+                  type="radio"
+                  ref="female"
+                  v-model="update.gender"
+                  name="gender"
+                  id="female"
+                  value="여성"
+                />여성
+              </label>
+            </form>
+            <br />
+            <span>생년월일</span>
+            <input type="date" v-model="update.birth_date" class="input-birth" />
+            <br />
+            <span>신장(cm)</span>
+            <input type="number" ref="height" v-model="update.height" />
+            <br />
+            <span>체중(kg)</span>
+            <input type="number" ref="weight" v-model="update.weight" />
+            <br />
+          </div>
+        </div>
+      </div>
+      <!-------- 과거력 -------->
+      <div class="cont2">
+        <div class="upload-title">과거력</div>
+        <div class="upload-detail2">
 					<!-- 11/02 인우 수정 -->
 					<span class="span2">알레르기 이력</span>
 					<label for="rhinitis">
@@ -101,30 +101,217 @@
 					</label>
 					<input type="text" v-show="allergy_rest" v-model="allergy_restText" placeholder="어떤 알레르기이신가요?"/>
 					<br />
-					<span class="span2">건강검진 여부</span>
-					<label for="yes">
-						<input
-							class="select"
-							type="radio"
-							v-model="update.had_checkup"
-							name="had_checkup"
-							id="yes"
-							value="true"
-						/>있음
-					</label>
-					<label for="no">
-						<input
-							class="select"
-							type="radio"
-							v-model="update.had_checkup"
-							name="had_checkup"
-							id="no"
-							value="false"
-						/>없음
-					</label>
-					<br />
-					<span class="span2" for="had_long_before">마지막으로 건강검진 받은 시기</span>
-					<br />
+          <span class="span2">건강검진 여부</span>
+          <label for="yes">
+            <input
+              class="select"
+              type="radio"
+              v-model="update.had_checkup"
+              name="had_checkup"
+              id="yes"
+              value="true"
+            />있음
+          </label>
+          <label for="no">
+            <input
+              class="select"
+              type="radio"
+              v-model="update.had_checkup"
+              name="had_checkup"
+              id="no"
+              value="false"
+            />없음
+          </label>
+          <br />
+          <span class="span2" for="had_long_before">마지막으로 건강검진 받은 시기</span>
+          <br />
+          <input
+            class="select selectline"
+            type="radio"
+            v-model="update.had_checkup_true"
+            name="had_checkup_true"
+            value="1년 이내"
+          />1년 이내
+          <input
+            class="select selectline"
+            type="radio"
+            v-model="update.had_checkup_true"
+            name="had_checkup_true"
+            value="1-3년"
+          />1~3년
+          <input
+            class="select selectline"
+            type="radio"
+            v-model="update.had_checkup_true"
+            name="had_checkup_true"
+            value="3-5년"
+          />3~5년
+          <input
+            class="select selectline"
+            type="radio"
+            v-model="update.had_checkup_true"
+            name="had_checkup_true"
+            value="5-10년"
+          />5~10년
+          <br />
+          <span class="span2" for="disease_list">병 진단 이력</span>
+          <br />
+          <input
+            type="checkbox"
+            class="select selectline"
+            v-model="update.diagnosed_disease"
+            @click="diseaseDetail"
+            value="고혈압"
+          />고혈압
+          <input
+            class="select selectline"
+            type="checkbox"
+            v-model="update.diagnosed_disease"
+            @click="diseaseDetail"
+            value="간염"
+          />간염
+          <input
+            class="select selectline"
+            type="checkbox"
+            v-model="update.diagnosed_disease"
+            @click="diseaseDetail"
+            value="결핵"
+          />결핵
+          <input
+            class="select selectline"
+            type="checkbox"
+            v-model="update.diagnosed_disease"
+            value="없음"
+          />없음
+          <input
+            class="select selectline"
+            type="checkbox"
+            v-model="update.diagnosed_disease"
+            @click="diseaseRest"
+            value="기타"
+          />기타
+          <br />
+          <!-- 11/02 상하수정 -->
+          <div v-show="diagnosed_disease_rest">
+            <span>기타 병명을 기입해주세요</span>
+            <br />
+            <input type="text" v-model="diagnosed_disease_restText" placeholder="예) 대장암" />
+            <p v-if="diagnosed_disease_rest"></p>
+            <span class="span2">진단 시기</span>
+            <br />
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="1년 전"
+            /> 1년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="2년 전"
+            /> 2년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="3-5년 전"
+            /> 3-5년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="5-10년 전"
+            /> 5-10년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="10년 이상"
+            /> 10년 이상
+            <br />
+            <span>해당 질병과 관련하여 복용중인 약이 있습니까(선택)</span>
+            <br />
+            <input type="text" placeholder="약 이름을 기입해주세요" />
+            <br />
+            <span>해당 질병을 어느 병원에서 진단 받았습니까(선택)</span>
+            <br />
+            <input type="text" placeholder="예) 안암구로병원" />
+          </div>
+          <!-- 11/02 상하수정 -->
+          <div v-if="disease_detail_toggle">
+            <span class="span2">진단 시기</span>
+            <br />
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="1년 전"
+            /> 1년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="2년 전"
+            /> 2년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="3-5년 전"
+            /> 3-5년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="5-10년 전"
+            /> 5-10년 전
+            <input
+              class="select"
+              type="radio"
+              name="diagnosed_period"
+              v-model="update.disease_detail_year"
+              value="10년 이상"
+            /> 10년 이상
+            <br />
+            <span>해당 질병과 관련하여 복용중인 약이 있습니까(선택)</span>
+            <br />
+            <input type="text" placeholder="약 이름을 기입해주세요" />
+          </div>
+          <span>{{update.diagnosed_disease.toString()}} 약 외에 복용중인 약</span>
+          <br />
+          <label for="yes">
+            <input
+              class="select selectline"
+              type="radio"
+              v-model="update.taking_medicine"
+              name="taking_medicine"
+              id="yes"
+              value="true"
+            />있음
+          </label>
+          <label for="no">
+            <input
+              class="select"
+              type="radio"
+              v-model="update.taking_medicine"
+              name="taking_medicine"
+              id="no"
+              value="false"
+            />없음
+          </label>
+          <br />
+          <span>약 이름</span>
+          <input type="text" ref="what_medicine" v-model="update.what_medicine" />
 
 					<input
 						class="select selectline"
@@ -151,42 +338,6 @@
 					<br />
 					<span>이상소견</span>
 					<input type="text" ref="feedback" v-model="update.feedback" placeholder="ex)갑상선 수치에 이상이 있어요"/>
-					<span class="span2" for="disease_list">병 진단 이력</span>
-					<br />
-					<input
-						type="checkbox"
-						class="select selectline"
-						v-model="update.diagnosed_disease"
-						value="고혈압"
-					/>고혈압
-					<input
-						class="select selectline"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-						value="간염"
-					/>간염
-					<input
-						class="select selectline"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-						value="결핵"
-					/>결핵
-					<input
-						class="select selectline"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-						value="없음"
-					/>없음
-					<input
-						class="select selectline"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-						@click="diseaseRest"
-						value="기타"
-					/>기타
-					<br />
-					<input type="text" v-show="diagnosed_disease_rest" v-model="diagnosed_disease_restText" />
-					<p v-if="diagnosed_disease_rest"></p>
 					<span class="span2">복용중인 약</span>
 					<br />
 					<label for="yes">
@@ -374,7 +525,7 @@ export default {
 			update.diagnosed_disease = [];
 			update.relevant_data = [];
 			return update;
-		},
+		}
 	},
 	data() {
 		return {
@@ -384,6 +535,8 @@ export default {
 			bottles: false,	
 			diagnosed_disease_restText: '',
 			family_history_restText: '',
+			//   11.02 상하수정
+			disease_detail_toggle: false,
 			allergy_restText: '',
 			have_family_history: false
 		};
@@ -400,7 +553,25 @@ export default {
 		},
 		diseaseRest() {
 			this.diagnosed_disease_rest = !this.diagnosed_disease_rest;
-		},
+      //   this.diseaseRestSplice();
+      console.log(this.update.diagnosed_disease);
+    },
+    diseaseRestSplice() {
+      let indexOfRest = this.update.diagnosed_disease.indexOf("기타");
+      if (indexOfRest > -1) {
+        this.update.diagnosed_disease.splice(indexOfRest, 1);
+      }
+    },
+    diseaseDetail(event) {
+      let value = event.target.value;
+      this.disease_detail_toggle = !this.disease_detail_toggle;
+      //   this.diseaseDetailSplice(value);
+      console.log(this.update.diagnosed_disease);
+    },
+    diseaseDetailSplice(value) {
+      let indexOfValue = this.update.diagnosed_disease.indexOf(value);
+      this.update.diagnosed_disease.splice(indexOfValue, 1);
+    },
 		familyRest() {
 			this.family_history_rest = !this.family_history_rest;
 		},
@@ -432,7 +603,7 @@ export default {
   padding: 20px 0;
   background-color: #ebebeb;
   width: 100%;
-  height: 25rem;
+  max-height: 35rem;
 }
 .cont3 {
   display: flex;
@@ -442,7 +613,7 @@ export default {
   padding: 20px 0;
   background-color: #ffffff;
   width: 100%;
-  height: 25rem;
+  max-height: 35rem;
 }
 .upload-title {
   color: #397979;
@@ -463,8 +634,12 @@ export default {
   margin: 0 auto;
 }
 .upload-detail2 {
-  max-width: 400px;
+  max-width: 600px;
   /* margin: 0 50px; */
+}
+.upload-detail2 input {
+  height: 26px;
+  padding: 2px;
 }
 .upload-detail3 {
   max-width: 400px;
@@ -475,8 +650,7 @@ span {
   font-weight: bolder;
   font-weight: 800;
   display: inline-block;
-  width: 30%;
-  margin-bottom: 12px;
+  width: 100%;
   line-height: 120%;
 }
 .span2 {
@@ -511,6 +685,7 @@ span {
 }
 input {
   border: 1px solid #397979;
+  vertical-align: middle;
 }
 .input-birth {
   width: 168px;
@@ -520,9 +695,7 @@ input {
   margin-right: 5px;
   margin-left: 5px;
 }
-.selectline {
-  margin-bottom: 15px;
-}
+
 .inputsmall {
   width: 35%;
   height: 26px;
