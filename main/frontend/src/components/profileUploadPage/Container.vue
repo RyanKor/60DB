@@ -115,30 +115,21 @@
             type="checkbox"
             class="select selectline"
             v-model="update.diagnosed_disease"
-<<<<<<< HEAD
             @click="diseaseDetail"
-=======
->>>>>>> sangha
             value="고혈압"
           />고혈압
           <input
             class="select selectline"
             type="checkbox"
             v-model="update.diagnosed_disease"
-<<<<<<< HEAD
             @click="diseaseDetail"
-=======
->>>>>>> sangha
             value="간염"
           />간염
           <input
             class="select selectline"
             type="checkbox"
             v-model="update.diagnosed_disease"
-<<<<<<< HEAD
             @click="diseaseDetail"
-=======
->>>>>>> sangha
             value="결핵"
           />결핵
           <input
@@ -155,7 +146,6 @@
             value="기타"
           />기타
           <br />
-<<<<<<< HEAD
           <!-- 11/02 상하수정 -->
           <div v-show="diagnosed_disease_rest">
             <span>기타 병명을 기입해주세요</span>
@@ -252,11 +242,7 @@
             <br />
             <input type="text" placeholder="약 이름을 기입해주세요" />
           </div>
-=======
-          <input type="text" v-show="diagnosed_disease_rest" v-model="diagnosed_disease_restText" />
-          <p v-if="diagnosed_disease_rest"></p>
->>>>>>> sangha
-          <span class="span2">복용중인 약</span>
+          <span>{{update.diagnosed_disease.toString()}} 약 외에 복용중인 약</span>
           <br />
           <label for="yes">
             <input
@@ -381,13 +367,9 @@ export default {
       diagnosed_disease_rest: false,
       family_history_rest: false,
       diagnosed_disease_restText: "",
-<<<<<<< HEAD
       family_history_restText: "",
       //   11.02 상하수정
       disease_detail_toggle: false
-=======
-      family_history_restText: ""
->>>>>>> sangha
     };
   },
   methods: {
@@ -402,35 +384,25 @@ export default {
     },
     diseaseRest() {
       this.diagnosed_disease_rest = !this.diagnosed_disease_rest;
-      this.diseaseRestSplice();
-<<<<<<< HEAD
+      //   this.diseaseRestSplice();
       console.log(this.update.diagnosed_disease);
     },
     diseaseRestSplice() {
       let indexOfRest = this.update.diagnosed_disease.indexOf("기타");
-=======
-    },
-    diseaseRestSplice() {
-      const arr = this.update.diagnosed_disease;
-      let indexOfRest = arr.indexOf("기타");
->>>>>>> sangha
       if (indexOfRest > -1) {
         this.update.diagnosed_disease.splice(indexOfRest, 1);
       }
     },
-<<<<<<< HEAD
     diseaseDetail(event) {
       let value = event.target.value;
       this.disease_detail_toggle = !this.disease_detail_toggle;
-      this.diseaseDetailSplice(value);
+      //   this.diseaseDetailSplice(value);
       console.log(this.update.diagnosed_disease);
     },
     diseaseDetailSplice(value) {
       let indexOfValue = this.update.diagnosed_disease.indexOf(value);
       this.update.diagnosed_disease.splice(indexOfValue, 1);
     },
-=======
->>>>>>> sangha
     familyRest() {
       this.family_history_rest = !this.family_history_rest;
     }
@@ -456,11 +428,7 @@ export default {
   padding: 20px 0;
   background-color: #ebebeb;
   width: 100%;
-<<<<<<< HEAD
   max-height: 35rem;
-=======
-  height: 25rem;
->>>>>>> sangha
 }
 .cont3 {
   display: flex;
@@ -470,11 +438,7 @@ export default {
   padding: 20px 0;
   background-color: #ffffff;
   width: 100%;
-<<<<<<< HEAD
   max-height: 35rem;
-=======
-  height: 25rem;
->>>>>>> sangha
 }
 .upload-title {
   color: #397979;
@@ -495,17 +459,12 @@ export default {
   margin: 0 auto;
 }
 .upload-detail2 {
-<<<<<<< HEAD
   max-width: 600px;
   /* margin: 0 50px; */
 }
 .upload-detail2 input {
   height: 26px;
   padding: 2px;
-=======
-  max-width: 400px;
-  /* margin: 0 50px; */
->>>>>>> sangha
 }
 .upload-detail3 {
   max-width: 400px;
@@ -516,12 +475,7 @@ span {
   font-weight: bolder;
   font-weight: 800;
   display: inline-block;
-<<<<<<< HEAD
   width: 100%;
-=======
-  width: 30%;
-  margin-bottom: 12px;
->>>>>>> sangha
   line-height: 120%;
 }
 .span2 {
@@ -556,10 +510,7 @@ span {
 }
 input {
   border: 1px solid #397979;
-<<<<<<< HEAD
   vertical-align: middle;
-=======
->>>>>>> sangha
 }
 .input-birth {
   width: 168px;
@@ -568,12 +519,6 @@ input {
 .select {
   margin-right: 5px;
   margin-left: 5px;
-<<<<<<< HEAD
-=======
-}
-.selectline {
-  margin-bottom: 15px;
->>>>>>> sangha
 }
 
 .inputsmall {
