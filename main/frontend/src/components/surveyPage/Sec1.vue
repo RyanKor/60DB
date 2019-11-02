@@ -36,7 +36,7 @@
 						<template v-slot:actions></template>
 					</v-expansion-panel-header>
 					<v-expansion-panel-content class="content animate fadeInUp one">
-						<p class="question">통증이 언제 시작되었나요?</p>
+						<p class="question">증상이 정확히 언제부터 시작되었나요?</p>
 						<br />
 						<br />
 						<div class="answers">
@@ -45,7 +45,7 @@
 									type="text"
 									v-model="survey_data.symptom_start_less_than_month"
 									class="ans-txt"
-									placeholder="예) 5일전"
+									placeholder="ex)하루 전, 일주일 전, 세 달 전"
 								/>
 							</div>
 						</div>
