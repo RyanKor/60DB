@@ -12,7 +12,7 @@
           </div>
           <div class="upload-info">
             <span>이름</span>
-            <input type="text" ref="name" v-model="update.name" placeholder="ex)홍길동" />
+            <input type="text" ref="name" v-model="update.name" />
             <br />
             <span>성별</span>
             <form>
@@ -43,10 +43,10 @@
             <span>생년월일</span>
             <input type="date" v-model="update.birth_date" class="input-birth" />
             <br />
-            <span>신장(cm)</span>
+            <span>신장</span>
             <input type="number" ref="height" v-model="update.height" />
             <br />
-            <span>체중(kg)</span>
+            <span>체중</span>
             <input type="number" ref="weight" v-model="update.weight" />
             <br />
           </div>
@@ -56,56 +56,6 @@
       <div class="cont2">
         <div class="upload-title">과거력</div>
         <div class="upload-detail2">
-          <!-- 11/02 인우 수정 -->
-          <span class="span2">알레르기 이력</span>
-          <label for="rhinitis">
-            <input
-              class="select"
-              type="checkbox"
-              v-model="update.allergy"
-              name="allergy"
-              id="rhinitis"
-              value="rhinitis"
-            />비염
-          </label>
-          <label for="dermatitis">
-            <input
-              class="select"
-              type="checkbox"
-              v-model="update.allergy"
-              name="allergy"
-              id="dermatitis"
-              value="dermatitis"
-            />피부염
-          </label>
-          <label for="asthma">
-            <input
-              class="select"
-              type="checkbox"
-              v-model="update.allergy"
-              name="allergy"
-              id="asthma"
-              value="asthma"
-            />천식
-          </label>
-          <label for="others">
-            <input
-              class="select"
-              type="checkbox"
-              v-model="update.allergy"
-              name="allergy"
-              id="others"
-              value="others"
-              @click="allergyRest"
-            />기타
-          </label>
-          <input
-            type="text"
-            v-show="allergy_rest"
-            v-model="allergy_restText"
-            placeholder="어떤 알레르기이신가요?"
-          />
-          <br />
           <span class="span2">건강검진 여부</span>
           <label for="yes">
             <input
@@ -128,7 +78,7 @@
             />없음
           </label>
           <br />
-          <span for="had_long_before">마지막으로 건강검진 받은 시기</span>
+          <span class="span2" for="had_long_before">건강검진 시기</span>
           <br />
           <input
             class="select selectline"
@@ -161,40 +111,16 @@
           <br />
           <span class="span2" for="disease_list">병 진단 이력</span>
           <br />
-          <input
-            type="checkbox"
-            class="select selectline"
-            v-model="update.diagnosed_disease"
-            @click="diseaseDetail"
-            value="고혈압"
-          />고혈압
-          <input
-            class="select selectline"
-            type="checkbox"
-            v-model="update.diagnosed_disease"
-            @click="diseaseDetail"
-            value="간염"
-          />간염
-          <input
-            class="select selectline"
-            type="checkbox"
-            v-model="update.diagnosed_disease"
-            @click="diseaseDetail"
-            value="결핵"
-          />결핵
+          <input type="checkbox" class="select selectline" @click="getDiseaseDetail" value="고혈압" />고혈압
+          <input class="select selectline" type="checkbox" @click="getDiseaseDetail" value="간염" />간염
+          <input class="select selectline" type="checkbox" @click="getDiseaseDetail" value="결핵" />결핵
           <input
             class="select selectline"
             type="checkbox"
             v-model="update.diagnosed_disease"
             value="없음"
           />없음
-          <input
-            class="select selectline"
-            type="checkbox"
-            v-model="update.diagnosed_disease"
-            @click="diseaseRest"
-            value="기타"
-          />기타
+          <input class="select selectline" type="checkbox" @click="getDiseaseRest" value="기타" />기타
           <br />
           <!-- 11/02 상하수정 -->
           <div v-show="diagnosed_disease_rest">
@@ -292,15 +218,7 @@
             <br />
             <input type="text" placeholder="약 이름을 기입해주세요" />
           </div>
-          <span>이상소견</span>
-          <input
-            type="text"
-            ref="feedback"
-            v-model="update.feedback"
-            placeholder="ex)갑상선 수치에 이상이 있어요"
-          />
-          <br />
-          <!-- <span class="span2">복용중인 약</span>
+          <span>{{update.diagnosed_disease.toString()}} 약 외에 복용중인 약</span>
           <br />
           <label for="yes">
             <input
@@ -321,100 +239,47 @@
               id="no"
               value="false"
             />없음
-          </label>-->
+          </label>
           <br />
-          <span v-if="update.diagnosed_disease.indexOf('기타')>-1">메롱메롱</span>
-          <span v-else-if="update.diagnosed_disease.indexOf('없음')>-1">윀윀</span>
-          <span v-else>{{update.diagnosed_disease.toString()}}</span>
           <span>약 이름</span>
           <input type="text" ref="what_medicine" v-model="update.what_medicine" />
-          <!-- 11/02 인우 수정 -->
-          <span>복용중인 건강 식품</span>
-          <label for="vitamins">
-            <input type="radio" name="healthy_food" v-model="update.healthy_food" id="vitamins" />비타민제
-          </label>
-          <label for="oriental-medicine">
-            <input
-              type="radio"
-              name="healthy_food"
-              v-model="update.healthy_food"
-              id="oriental-medicine"
-            />한약
-          </label>
-          <label for="others">
-            <input type="radio" name="healthy_food" v-model="update.healthy_food" id="others" />기타
-          </label>
-          <span for="family_disease">가족력</span>
-          <!-- 11/02 인우 수정 -->
-          <input class="select" type="checkbox" v-model="have_family_history" value="true" />있음
-          <input class="select" type="checkbox" v-model="update.family_history" value="없음" />없음
-          <div v-show="have_family_history">
-            <input class="select" type="checkbox" v-model="update.from_whom" value="부모" />부모
-            <input class="select" type="checkbox" v-model="update.from_whom" value="형제" />형제
-            <input class="select" type="checkbox" v-model="update.from_whom" value="4촌 내 친척" />4촌 내 친척
-            <input class="select" type="checkbox" v-model="update.from_whom" value="이외 기타" />이외 기타
-            <br />
-            <input class="select" type="checkbox" v-model="update.family_history" value="고혈압" />고혈압
-            <input class="select" type="checkbox" v-model="update.family_history" value="간염" />간염
-            <input class="select" type="checkbox" v-model="update.family_history" value="결핵" />결핵
-            <input
-              class="select"
-              type="checkbox"
-              v-model="update.family_history"
-              value="기타"
-              @click="familyRest"
-            />기타
-            <input type="text" v-model="family_history_restText" v-show="family_history_rest" />
-          </div>
 
+          <span for="family_disease">가족력</span>
           <br />
+          <input class="select" type="checkbox" v-model="update.family_history" value="고혈압" />고혈압
+          <input class="select" type="checkbox" v-model="update.family_history" value="간염" />간염
+          <input class="select" type="checkbox" v-model="update.family_history" value="결핵" />결핵
+          <input class="select" type="checkbox" v-model="update.family_history" value="없음" />없음
+          <input
+            class="select"
+            type="checkbox"
+            v-model="update.family_history"
+            value="기타"
+            @click="familyRest"
+          />기타
+          <input type="text" v-model="family_history_restText" v-show="family_history_rest" />
         </div>
       </div>
       <!-------- 사회력 -------->
       <div class="cont3">
         <div class="upload-title">사회력</div>
         <div class="upload-detail3">
-          <span class="span3">커피 이력</span>
-          <label for="zero-to-one">
-            <input type="radio" name="coffee" v-model="update.coffee" id="zero-to-one" />0-1잔
-          </label>
-          <label for="two-to-three">
-            <input type="radio" name="coffee" v-model="update.coffee" id="two-to-three" />2-3잔
-          </label>
-          <label for="more-than-four">
-            <input type="radio" name="coffee" v-model="update.coffee" id="more-than-four" />4잔 이상
-          </label>
-          <span class="span3">스트레스 이력</span>
-          <label for="yes">
-            <input type="radio" name="stress" v-model="update.stress" id="yes" />예
-          </label>
-          <label for="no">
-            <input type="radio" name="stress" v-model="update.stress" id="no" />아니요
-          </label>
           <span class="span3">음주 여부</span>
           <label for="yes">
-            <input
-              type="radio"
-              v-model="update.drinking"
-              name="drinking"
-              id="yes"
-              value="True"
-              @click="bottlesCount"
-            />네
+            <input type="radio" v-model="update.drinking" name="drinking" id="yes" value="True" />네
           </label>
           <label for="no">
             <input type="radio" v-model="update.drinking" name="drinking" id="no" value="False" />아니오
           </label>
           <br />
-          <div v-show="bottles">
-            <span class="span3 spanlong">일주일에 소주를 몇 병 정도 마시나요?</span>
-            <input
-              class="inputsmall"
-              type="number"
-              ref="drinking_per_week"
-              v-model="update.drinking_per_week"
-            />
-          </div>
+          <span class="span3 spanlong">음주량(병)(일주일)</span>
+          <input
+            class="inputsmall"
+            type="number"
+            ref="drinking_per_week"
+            v-model="update.drinking_per_week"
+          />
+          <br />
           <span class="span3">흡연 여부</span>
           <label for="yes">
             <input type="radio" v-model="update.smoking" name="smoking" id="yes" value="True" />네
@@ -467,8 +332,6 @@ export default {
   computed: {
     update: function() {
       let update = { ...this.$store.state.profile };
-      update.allergy = [];
-      update.from_whom = [];
       update.family_history = [];
       update.diagnosed_disease = [];
       update.relevant_data = [];
@@ -479,14 +342,10 @@ export default {
     return {
       diagnosed_disease_rest: false,
       family_history_rest: false,
-      allergy_rest: false,
-      bottles: false,
       diagnosed_disease_restText: "",
       family_history_restText: "",
       //   11.02 상하수정
-      disease_detail_toggle: false,
-      allergy_restText: "",
-      have_family_history: false
+      disease_detail_toggle: false
     };
   },
   methods: {
@@ -499,35 +358,35 @@ export default {
       }
       this.$store.dispatch("updateProfileInfo", this.update);
     },
-    diseaseRest() {
+    diseaseRestToggle() {
       this.diagnosed_disease_rest = !this.diagnosed_disease_rest;
-      // this.diseaseRestSplice();
-      console.log(this.update.diagnosed_disease);
     },
-    diseaseRestSplice() {
-      let indexOfRest = this.update.diagnosed_disease.indexOf("기타");
+    getDiseaseRest(event) {
+      this.diseaseRestToggle();
+      let value = event.target.value;
+      let indexOfRest = this.update.diagnosed_disease.indexOf(value);
       if (indexOfRest > -1) {
         this.update.diagnosed_disease.splice(indexOfRest, 1);
+      } else {
+        this.updated.diagnosed_disease.push(value);
       }
     },
-    diseaseDetail(event) {
-      let value = event.target.value;
+    // 11/03 상하수정
+    diseaseDetailToggle() {
       this.disease_detail_toggle = !this.disease_detail_toggle;
-      // this.diseaseDetailSplice(value);
-      console.log(this.update.diagnosed_disease);
     },
-    diseaseDetailSplice(value) {
-      let indexOfValue = this.update.diagnosed_disease.indexOf(value);
-      this.update.diagnosed_disease.splice(indexOfValue, 1);
+    getDiseaseDetail(event) {
+      this.diseaseDetailToggle();
+      let value = event.target.value;
+      let indexOfvalue = this.update.diagnosed_disease.indexOf(value);
+      if (indexOfvalue > -1) {
+        this.update.diagnosed_disease.splice(indexOfvalue, 1);
+      } else {
+        this.update.diagnosed_disease.push(value);
+      }
     },
     familyRest() {
       this.family_history_rest = !this.family_history_rest;
-    },
-    allergyRest() {
-      this.allergy_rest = !this.allergy_rest;
-    },
-    bottlesCount() {
-      this.bottles = !this.bottles;
     }
   }
 };
