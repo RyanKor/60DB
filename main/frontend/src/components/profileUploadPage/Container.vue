@@ -111,7 +111,7 @@
           <br />
           <span class="span2" for="disease_list">병 진단 이력</span>
           <br />
-          <input type="checkbox" class="select selectline" @click="getDiseaseDetail" value="고혈압" />고혈압
+          <input class="select selectline" type="checkbox" @click="getDiseaseDetail" value="고혈압" />고혈압
           <input class="select selectline" type="checkbox" @click="getDiseaseDetail" value="간염" />간염
           <input class="select selectline" type="checkbox" @click="getDiseaseDetail" value="결핵" />결핵
           <input
@@ -123,11 +123,11 @@
           <input class="select selectline" type="checkbox" @click="getDiseaseRest" value="기타" />기타
           <br />
           <!-- 11/02 상하수정 -->
-          <div v-show="diagnosed_disease_rest">
+          <div v-if="disease_rest_toggle">
             <span>기타 병명을 기입해주세요</span>
             <br />
             <input type="text" v-model="diagnosed_disease_restText" placeholder="예) 대장암" />
-            <p v-if="diagnosed_disease_rest"></p>
+            <p v-if="disease_rest_toggle"></p>
             <span class="span2">진단 시기</span>
             <br />
             <input
@@ -340,12 +340,12 @@ export default {
   },
   data() {
     return {
-      diagnosed_disease_rest: false,
+      disease_rest_toggle: false,
+      disease_detail_toggle: false,
       family_history_rest: false,
       diagnosed_disease_restText: "",
-      family_history_restText: "",
+      family_history_restText: ""
       //   11.02 상하수정
-      disease_detail_toggle: false
     };
   },
   methods: {
@@ -359,24 +359,33 @@ export default {
       this.$store.dispatch("updateProfileInfo", this.update);
     },
     diseaseRestToggle() {
-      this.diagnosed_disease_rest = !this.diagnosed_disease_rest;
+      this.disease_rest_toggle = !this.disease_rest_toggle;
     },
     getDiseaseRest(event) {
-      this.diseaseRestToggle();
       let value = event.target.value;
       let indexOfRest = this.update.diagnosed_disease.indexOf(value);
       if (indexOfRest > -1) {
         this.update.diagnosed_disease.splice(indexOfRest, 1);
       } else {
-        this.updated.diagnosed_disease.push(value);
+        this.update.diagnosed_disease.push(value);
       }
+      console.log(this.update.diagnosed_disease);
+      this.diseaseRestToggle();
     },
     // 11/03 상하수정
     diseaseDetailToggle() {
-      this.disease_detail_toggle = !this.disease_detail_toggle;
+      if (!this.disease_detail_toggle) {
+        this.disease_detail_toggle = !this.disease_detail_toggle;
+      } else if (
+        this.disease_detail_toggle &&
+        this.update.diagnosed_disease.length >= 1
+      ) {
+        this.disease_detail_toggle = this.disease_detail_toggle;
+      } else {
+        this.disease_detail_toggle = !this.disease_detail_toggle;
+      }
     },
     getDiseaseDetail(event) {
-      this.diseaseDetailToggle();
       let value = event.target.value;
       let indexOfvalue = this.update.diagnosed_disease.indexOf(value);
       if (indexOfvalue > -1) {
@@ -384,6 +393,8 @@ export default {
       } else {
         this.update.diagnosed_disease.push(value);
       }
+      this.diseaseDetailToggle();
+      console.log(this.update.diagnosed_disease);
     },
     familyRest() {
       this.family_history_rest = !this.family_history_rest;
