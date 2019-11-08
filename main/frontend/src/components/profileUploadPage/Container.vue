@@ -121,20 +121,13 @@
             />
             <label :for="disease">{{ disease }}</label>
           </span>
-          <!-- 인우 : 고혈압, 간염, 결핵, 기타마다 모델 따로 만들어줘서 
-          1. 몇 년 전에 진단 받았는지
-          2. 그것 때문에 무슨 약을 먹는지(없으면 null값 저장되니까 무관)
-          3. 어디서 진단 받았는지
-          를 다 필드를 만들어줘야 합니다.
-          그 필드명이 아직 안 정해져서 밑에 v-model을 안 달았는데 이건 누군가 해줘요 ㅠㅠ
-          v-for문에서 저 v-model을 어떻게 지정해줘야 하는지도 잘 모르겠네요-->
           <br />
           <div v-if="update.diagnosed_disease.includes('기타')">
             <span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
             <input type="text" placeholder="ex)대장암" v-model="disease_other" />
             <br />
             <span class="span2">{{disease_other}}(은/는) 몇 년 전에 진단 받으셨나요?</span>
-            <input type="number" />
+            <input type="number" placeholder="년 단위의 숫자를 입력해주세요" />
             <br />
             <span class="span2">{{disease_other}} 때문에 드시고 계신 약이 있다면 적어주세요</span>
             <input type="text" placeholder="드시고 계신 약이 없다면 생략해주세요" />
@@ -146,6 +139,9 @@
           <div v-else-if="update.diagnosed_disease.includes('없음')"></div>
           <div v-else>
             <div v-for="disease in diseaseLabel" :key="disease">
+              <!-- 인우 : v-for문 안에서 v-model 어떻게 설정하는지 몰라서 일단 놔뒀습니다.
+              노드 백 가보시면 제가 diagnosed_disease관련해서 모델 확장해놨어요
+              모델명은 그거 참고하시면 될 것 같습니다.-->
               <div v-show="update.diagnosed_disease.includes(disease)&&disease!=('없음'||'기타')">
                 <span class="span2">{{disease}}(은/는) 몇 년 전에 진단 받으셨나요?</span>
                 <input type="number" />
@@ -192,8 +188,29 @@
             <input type="checkbox" :name="disease" :value="disease" v-model="update.family_history" />
             <label :for="disease">{{ disease }}</label>
           </span>
+          <br />
+          <span>알레르기 이력(없으면 생략해주세요)</span>
+          <!-- 인우 : '없음'을 안 넣고 싶어서 일단 이렇게 했는데 혹시 모르겠네요 필요한건지 -->
+          <br />
+          <span v-for="allergy in allergyLabel" :key="allergy">
+            <input
+              type="checkbox"
+              :name="allergy"
+              :value="allergy"
+              v-model="update.allergy_history"
+              @click="showAllergyHistory"
+            />
+            <label :for="allergy">{{ allergy }}</label>
+          </span>
+          <div v-show="update.allergy_history.includes('기타 알레르기')">
+            <input type="text" placeholder="어떤 알레르기이신가요?" />
+            <!-- 인우 : 굳이 span으로 질문지 만들 거 있나 싶어요 그냥 placeholder에 이렇게만 띄워도 될 거 같은데 -->
+          </div>
+          <!-- 인우 : 아직 배포 백에 allergy_history모델이 반영이 안 돼서 기능을 하지 않습니다 -->
         </div>
       </div>
+      <br />
+
       <!-------- 사회력 -------->
       <div class="cont3">
         <div class="upload-title">사회력</div>
@@ -263,14 +280,18 @@
 export default {
   created() {
     this.update = { ...this.$store.state.profile };
+    console.log(this.update);
   },
   data() {
     return {
       update: {},
-      diseaseLabel: ["고혈압", "간염", "결핵", "기타"],
+      diseaseLabel: ["고혈압", "간염", "결핵", "기타 진단명"],
+      // 인우 : duplicate keys에러 때문에 기타를 기타 진단명으로 바꿨습니다.
       disease_other: "",
       // 인우 : 얘가 병 진단 이력에서 기타 선택하고 입력받는 병명인데, 얘를 update의 diagnosed_disease에 넣어서 dispatch해야 될 것 같아요
       disease_boolean: "",
+      allergyLabel: ["비염", "피부염", "천식", "기타 알레르기"],
+      // 인우 : duplicate keys에러 때문에 기타를 기타 알레르기로 바꿨습니다.
       factorLabel: [
         "스트레스를 많이 받는 편",
         "식사 불규칙",
@@ -295,6 +316,9 @@ export default {
     initiateDiagnosedDisease() {
       this.update.diagnosed_disease = [];
       console.log(this.update.diagnosed_disease);
+    },
+    showAllergyHistory() {
+      console.log(this.update.allergy_history);
     }
   }
 };
