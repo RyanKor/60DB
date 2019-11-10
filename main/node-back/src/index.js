@@ -19,12 +19,20 @@ app.use(profileRouter);
 app.use(stomachRouter);
 
 // https.createServer({
-//   key: fs.readFileSync('./key.pem'),
-//   cert: fs.readFileSync('./cert.pem'),
-//   passphrase: '60decibel',
+//   key: fs.readFileSync('../key.pem'),
+//   cert: fs.readFileSync('../cert.pem'),
+//   // passphrase: '60decibel',
 // }, app)
 // .listen(3000, function () {
 //   console.log('Example app listening on port 3000! Go to https://localhost:port/')
+// })
+
+// https.createServer({
+//   key: fs.readFileSync('./server.key'),
+//   cert: fs.readFileSync('./server.cert')
+// }, app)
+// .listen(3000, function () {
+//   console.log('Example app listening on port 3000! Go to https://localhost:3000/')
 // })
 
 app.listen(port, () => {

@@ -130,8 +130,21 @@
 							class="select selectline"
 						/>{{ disease }}
 					</template> -->
-
-					<span v-for="disease in diseaseLabel" :key="disease">
+					<input
+						type="radio"
+						:value="true"
+						name="disease_boolean"
+						v-model="update.disease_boolean"
+					/>있음
+					<input
+						type="radio"
+						name="disease_boolean"
+						:value="false"
+						v-model="update.disease_boolean"
+						@click="initiateDiagnosedDisease"
+					/>
+					없음
+					<span v-show="update.disease_boolean" v-for="disease in diseaseLabel" :key="disease">
 						<input
 							type="checkbox"
 							:name="disease"
@@ -345,38 +358,38 @@ export default {
 				// weight: '',
 				// name: '',
 				// had_checkup: '',
-				diagnosed_disease: [
-					// {
-					// 	name: '고혈압',
-					// 	checked: false,
-					// 	history: '',
-					// 	medicine: '',
-					// },
-					// {
-					// 	name: '간염',
-					// 	checked: false,
-					// 	history: '',
-					// 	medicine: '',
-					// },
-					// {
-					// 	name: '결핵',
-					// 	checked: false,
-					// 	history: '',
-					// 	medicine: '',
-					// },
-					// {
-					// 	name: '없음',
-					// 	checked: false,
-					// },
-					// {
-					// 	name: '기타',
-					// 	disease: '',
-					// 	checked: false,
-					// 	history: '',
-					// 	medicine: '',
-					// 	where: '',
-					// },
-				],
+				// diagnosed_disease: [
+				// {
+				// 	name: '고혈압',
+				// 	checked: false,
+				// 	history: '',
+				// 	medicine: '',
+				// },
+				// {
+				// 	name: '간염',
+				// 	checked: false,
+				// 	history: '',
+				// 	medicine: '',
+				// },
+				// {
+				// 	name: '결핵',
+				// 	checked: false,
+				// 	history: '',
+				// 	medicine: '',
+				// },
+				// {
+				// 	name: '없음',
+				// 	checked: false,
+				// },
+				// {
+				// 	name: '기타',
+				// 	disease: '',
+				// 	checked: false,
+				// 	history: '',
+				// 	medicine: '',
+				// 	where: '',
+				// },
+				// ],
 				// taking_medicine: '',
 				taking_healthy: [],
 				family_history_true: [],
@@ -388,6 +401,8 @@ export default {
 				// smoking: '',
 				// job: '',
 				relevant_data: [],
+				disease_boolean: '',
+				had_checkup: '',
 			},
 			diseaseLabel: ['고혈압', '간염', '결핵', '없음', '기타'],
 			factorLabel: [

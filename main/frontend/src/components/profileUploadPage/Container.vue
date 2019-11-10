@@ -78,7 +78,7 @@
 						/>없음
 					</label>
 					<br />
-					<span class="span2" for="had_long_before">건강검진 시기</span>
+					<span class="span2" for="had_long_before" v-show="update.had_checkup">건강검진 시기</span>
 					<br />
 					<input
 						class="select selectline"
@@ -100,6 +100,12 @@
 						v-model="update.had_checkup_true"
 						value="5-10년"
 					/>5~10년
+					<span class="span2">건강검진-이상소견</span>
+					<input
+						type="text"
+						placeholder="ex)갑상선 수치에 이상이 있어요"
+						v-model="update.had_checkup_comment"
+					/>
 					<br />
 					<span class="span2" for="disease_list">병 진단 이력</span>
 					<br />
@@ -130,24 +136,90 @@
 							class="select selectline"
 						/>{{ disease }}
 					</template> -->
-
-					<span v-for="disease in diseaseLabel" :key="disease">
-						<input
-							type="checkbox"
-							:name="disease"
-							:value="disease"
-							v-model="update.diagnosed_disease"
-						/>
-						<label :for="disease">{{ disease }}</label>
+					<input
+						type="radio"
+						:value="true"
+						name="had_checkup"
+						v-model="update.disease_boolean"
+					/>있음
+					<input
+						type="radio"
+						name="had_checkup"
+						:value="false"
+						v-model="update.disease_boolean"
+						@click="initiateDiagnosedDisease"
+					/>
+					없음
+					<span
+						v-show="update.disease_boolean"
+						v-for="disease in update.diagnosed_disease"
+						:key="disease"
+					>
+						<input type="checkbox" :name="disease" :value="disease" v-model="disease.checked" />
+						<label v-if="!disease.label" :for="disease">{{ disease.name }}</label>
+						<label v-else :for="disease">기타</label>
 					</span>
-					<template name="diseaseIF">
-						<div v-if="update.diagnosed_disease.includes('고혈압')">
-							고혈압
+
+					<div v-show="update.diagnosed_disease[3].checked">
+						<span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
+						<input type="text" placeholder="ex)대장암" v-model="update.diagnosed_disease[3].name" />
+						<br />
+						<!-- <span class="span2"
+							>{{ update.diagnosed_disease[3].disease }}(은/는) 몇 년 전에 진단 받으셨나요?</span
+						>
+						<input
+							type="number"
+							placeholder="년 단위의 숫자를 입력해주세요"
+							v-model="update.diagnosed_disease[3].history"
+						/>
+						<br />
+						<span class="span2"
+							>{{ update.diagnosed_disease[3].disease }} 때문에 드시고 계신 약이 있다면
+							적어주세요</span
+						>
+						<input
+							type="text"
+							placeholder="드시고 계신 약이 없다면 생략해주세요"
+							v-model="update.diagnosed_disease[3].medicine"
+						/>
+						<br />
+						<span class="span2"
+							>{{ update.diagnosed_disease[3].disease }}(은/는) 어디서 진단 받으셨나요?</span
+						>
+						<input
+							type="text"
+							placeholder="기억나지 않는다면 생략해주세요"
+							v-model="update.diagnosed_disease[3].where"
+						/>
+						<br /> -->
+					</div>
+					<!-- <div v-else-if="update.diagnosed_disease.includes('없음')"></div> -->
+					<div v-for="disease in update.diagnosed_disease" :key="disease.name">
+						<!-- 인우 : v-for문 안에서 v-model 어떻게 설정하는지 몰라서 일단 놔뒀습니다.
+              노드 백 가보시면 제가 diagnosed_disease관련해서 모델 확장해놨어요
+              모델명은 그거 참고하시면 될 것 같습니다.-->
+						<div v-show="disease.checked">
+							<span class="span2">{{ disease.name }}(은/는) 몇 년 전에 진단 받으셨나요?</span>
+							<input type="number" v-model.number="disease.histroy" />
+							<br />
+							<span class="span2"
+								>{{ disease.name }} 때문에 드시고 계신 약이 있다면 적어주세요</span
+							>
+							<input
+								type="text"
+								placeholder="드시고 계신 약이 없다면 생략해주세요"
+								v-model="disease.medicine"
+							/>
+							<br />
+							<span class="span2">{{ disease.name }}(은/는) 어디서 진단 받으셨나요?</span>
+							<input
+								type="text"
+								placeholder="기억나지 않는다면 생략해주세요"
+								v-model="disease.where"
+							/>
+							<br />
 						</div>
-						<div v-if="update.diagnosed_disease.includes('간염')">
-							간염
-						</div>
-					</template>
+					</div>
 					<!-- <input
 						type="checkbox"
 						class="select selectline"
@@ -180,7 +252,8 @@
 					/>기타 -->
 					<br />
 					<!-- <input type="text" v-if="update.diagnosed_disease.indexOf('기타') >= 0" /> -->
-					<!-- <input type="text" v-show="diagnosed_disease_rest" v-model="diagnosed_disease_restText" /> -->
+					<!-- <input type="text" v-show="diagnosed_disease_rest" v-mo
+					del="diagnosed_disease_restText" /> -->
 					<span class="span2">복용중인 약</span>
 					<br />
 					<label for="yes">
@@ -355,6 +428,8 @@ export default {
 	data() {
 		return {
 			update: {},
+			disease_boolean: '',
+			disease_other: '',
 			diseaseLabel: ['고혈압', '간염', '결핵', '없음', '기타'],
 			factorLabel: [
 				'스트레스를 많이 받는 편',
@@ -366,14 +441,12 @@ export default {
 	},
 	methods: {
 		updateProfileInfo() {
-			// for (let ans in this.update) {
-			// 	if (!this.update[ans]) {
-			// 		if (this.update[ans] === false) continue;
-			// 		alert(`${ans}를 입력해주세요.`);
-			// 		return;
-			// 	}
-			// }
+			// if (this.disease_other) this.update.disease_other = this.disease_other;
 			this.$store.dispatch('updateProfileInfo', this.update);
+		},
+		initiateDiagnosedDisease() {
+			this.update.diagnosed_disease = [];
+			console.log(this.update.diagnosed_disease);
 		},
 	},
 };

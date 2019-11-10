@@ -55,14 +55,12 @@ const routes = [
       store.commit('SET_LOADING', true);
       if(requireAuth() === 'login')
       {
+        await store.dispatch('getProfileInfo');
         if(!checkProfile())
         {
           alert('프로필을 다 입력해주세요.');
           next('/profileupdate');
         }
-
-        if(!store.state.profile)
-          await store.dispatch('getProfileInfo')
 
         next();
       }

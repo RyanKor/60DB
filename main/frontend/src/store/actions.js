@@ -15,6 +15,7 @@ import {
 } from '../api/axios.js';
 
 import { SessionExpired, LoginSuccess } from './actions-fun.js';
+import { rejects } from 'assert';
 export default {
 	login({ commit }, loginObj) {
 		commit('SET_LOADING', true);
@@ -186,6 +187,7 @@ export default {
 			.catch(error => {
 				if (error.response.status === 404) {
 					alert('설문조사를 해주세요');
+					commit('SET_LOADING', false);
 					router.push({
 						name: 'profilepost',
 					});
