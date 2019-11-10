@@ -145,9 +145,9 @@
 					<input
 						type="radio"
 						name="had_checkup"
+						@click="initiateDiagnosedDisease()"
 						:value="false"
 						v-model="update.disease_boolean"
-						@click="initiateDiagnosedDisease"
 					/>
 					없음
 
@@ -444,8 +444,9 @@ export default {
 			this.$store.dispatch('updateProfileInfo', this.update);
 		},
 		initiateDiagnosedDisease() {
-			this.update.diagnosed_disease = [];
-			console.log(this.update.diagnosed_disease);
+			this.update.diagnosed_disease.forEach(disease => {
+				disease.checked = false;
+			});
 		},
 	},
 };
