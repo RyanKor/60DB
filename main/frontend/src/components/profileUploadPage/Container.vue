@@ -148,40 +148,9 @@
             <span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
             <input type="text" placeholder="ex)대장암" v-model="update.diagnosed_disease[3].name" />
             <br />
-            <!-- <span class="span2"
-							>{{ update.diagnosed_disease[3].disease }}(은/는) 몇 년 전에 진단 받으셨나요?</span
-						>
-						<input
-							type="number"
-							placeholder="년 단위의 숫자를 입력해주세요"
-							v-model="update.diagnosed_disease[3].history"
-						/>
-						<br />
-						<span class="span2"
-							>{{ update.diagnosed_disease[3].disease }} 때문에 드시고 계신 약이 있다면
-							적어주세요</span
-						>
-						<input
-							type="text"
-							placeholder="드시고 계신 약이 없다면 생략해주세요"
-							v-model="update.diagnosed_disease[3].medicine"
-						/>
-						<br />
-						<span class="span2"
-							>{{ update.diagnosed_disease[3].disease }}(은/는) 어디서 진단 받으셨나요?</span
-						>
-						<input
-							type="text"
-							placeholder="기억나지 않는다면 생략해주세요"
-							v-model="update.diagnosed_disease[3].where"
-						/>
-            <br />-->
           </div>
-          <!-- <div v-else-if="update.diagnosed_disease.includes('없음')"></div> -->
+
           <div v-for="disease in update.diagnosed_disease" :key="disease.name">
-            <!-- 인우 : v-for문 안에서 v-model 어떻게 설정하는지 몰라서 일단 놔뒀습니다.
-              노드 백 가보시면 제가 diagnosed_disease관련해서 모델 확장해놨어요
-            모델명은 그거 참고하시면 될 것 같습니다.-->
             <div v-if="disease.checked">
               <span class="span2">{{ disease.name }}(은/는) 몇 년 전에 진단 받으셨나요?</span>
               <input type="number" v-model.number="disease.histroy" />
@@ -260,22 +229,18 @@
             <input type="checkbox" :name="disease" :value="disease" v-model="update.family_history" />
             <label :for="disease">{{ disease }}</label>
           </span>
-          <!-- <input
-						class="select"
-						type="checkbox"
-						v-model="update.family_history"
-						value="고혈압"
-					/>고혈압
-					<input class="select" type="checkbox" v-model="update.family_history" value="간염" />간염
-					<input class="select" type="checkbox" v-model="update.family_history" value="결핵" />결핵
-					<input class="select" type="checkbox" v-model="update.family_history" value="없음" />없음
-					<input
-						class="select"
-						type="checkbox"
-						v-model="update.family_history"
-						value="기타"
-						@click="familyRest"
-          />기타-->
+          <br />
+          <span>알레르기 이력(없으면 생략해주세요)</span>
+          <!-- 인우 : '없음'을 안 넣고 싶어서 일단 이렇게 했는데 혹시 모르겠네요 필요한건지 -->
+          <br />
+          <span v-for="allergy in allergyLabel" :key="allergy">
+            <input type="checkbox" :name="allergy" :value="allergy" v-model="update.allergy" />
+            <label :for="allergy">{{ allergy }}</label>
+          </span>
+          <div v-show="update.allergy.includes('기타 알레르기')">
+            <input type="text" placeholder="어떤 알레르기이신가요?" />
+            <!-- 인우 : 굳이 span으로 질문지 만들 거 있나 싶어요 그냥 placeholder에 이렇게만 띄워도 될 거 같은데 -->
+          </div>
         </div>
       </div>
       <!-------- 사회력 -------->
@@ -373,6 +338,8 @@ export default {
       disease_boolean: "",
       disease_other: "",
       diseaseLabel: ["고혈압", "간염", "결핵", "없음", "기타"],
+      allergyLabel: ["비염", "피부염", "천식", "기타 알레르기"],
+      // 인우 : duplicate keys에러 때문에 기타를 기타 알레르기로 바꿨습니다.
       factorLabel: [
         "스트레스를 많이 받는 편",
         "식사 불규칙",
