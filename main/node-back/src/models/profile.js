@@ -73,37 +73,37 @@ const profileSchema = new mongoose.Schema({
   diagnosed_disease : {
     type : Array,
     // default : [],
-    default : [
-      {
-        name : "고혈압",
-        checked : false,
-        // history : "",
-        // medicine : "",
-        // where : "",
-      },
-      {
-        name : "간염",
-        checked : false,
-        // history : "",
-        // medicine : "",
-        // where : "",
-      },
-      {
-        name : "결핵",
-        checked : false,
-        // history : "",
-        // medicine : "",
-        // where : "",
-      },
-      {
-        name : "",
-        label : "기타",
-        checked : false,
-        // history : "",
-        // medicine : "",
-        // where : "",
-      },
-    ],
+    // default : [
+    //   {
+    //     name : "고혈압",
+    //     checked : false,
+    //     // history : "",
+    //     // medicine : "",
+    //     // where : "",
+    //   },
+    //   {
+    //     name : "간염",
+    //     checked : false,
+    //     // history : "",
+    //     // medicine : "",
+    //     // where : "",
+    //   },
+    //   {
+    //     name : "결핵",
+    //     checked : false,
+    //     // history : "",
+    //     // medicine : "",
+    //     // where : "",
+    //   },
+    //   {
+    //     name : "",
+    //     label : "기타",
+    //     checked : false,
+    //     // history : "",
+    //     // medicine : "",
+    //     // where : "",
+    //   },
+    // ],
     // required : true,
   },
   taking_medicine : {

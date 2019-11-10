@@ -141,7 +141,6 @@
 						name="disease_boolean"
 						:value="false"
 						v-model="update.disease_boolean"
-						@click="initiateDiagnosedDisease"
 					/>
 					없음
 					<span v-show="update.disease_boolean" v-for="disease in diseaseLabel" :key="disease">
@@ -393,6 +392,37 @@ export default {
 				// taking_medicine: '',
 				taking_healthy: [],
 				family_history_true: [],
+				diagnosed_disease: [
+					{
+						name: '고혈압',
+						checked: false,
+						// history : "",
+						// medicine : "",
+						// where : "",
+					},
+					{
+						name: '간염',
+						checked: false,
+						// history : "",
+						// medicine : "",
+						// where : "",
+					},
+					{
+						name: '결핵',
+						checked: false,
+						// history : "",
+						// medicine : "",
+						// where : "",
+					},
+					{
+						name: '',
+						label: '기타',
+						checked: false,
+						// history : "",
+						// medicine : "",
+						// where : "",
+					},
+				],
 				allergy: [],
 				// coffee: '',
 				// stress_recent: '',
@@ -416,6 +446,10 @@ export default {
 	methods: {
 		postProfileInfo() {
 			this.$store.dispatch('postProfileInfo', this.update);
+		},
+		initiateDiagnosedDisease() {
+			this.update.diagnosed_disease = [];
+			console.log(this.update.diagnosed_disease);
 		},
 	},
 };

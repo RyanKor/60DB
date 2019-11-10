@@ -150,17 +150,16 @@
 						@click="initiateDiagnosedDisease"
 					/>
 					없음
-					<span
-						v-show="update.disease_boolean"
-						v-for="disease in update.diagnosed_disease"
-						:key="disease"
-					>
-						<input type="checkbox" :name="disease" :value="disease" v-model="disease.checked" />
-						<label v-if="!disease.label" :for="disease">{{ disease.name }}</label>
-						<label v-else :for="disease">기타</label>
-					</span>
 
-					<div v-show="update.diagnosed_disease[3].checked">
+					<template v-if="update.disease_boolean">
+						<span v-for="disease in update.diagnosed_disease" :key="disease">
+							<input type="checkbox" :name="disease" v-model="disease.checked" />
+							<label v-if="!disease.label" :for="disease">{{ disease.name }}</label>
+							<label v-else :for="disease">기타</label>
+						</span>
+					</template>
+
+					<div v-if="update.diagnosed_disease[3].checked">
 						<span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
 						<input type="text" placeholder="ex)대장암" v-model="update.diagnosed_disease[3].name" />
 						<br />
@@ -198,7 +197,7 @@
 						<!-- 인우 : v-for문 안에서 v-model 어떻게 설정하는지 몰라서 일단 놔뒀습니다.
               노드 백 가보시면 제가 diagnosed_disease관련해서 모델 확장해놨어요
               모델명은 그거 참고하시면 될 것 같습니다.-->
-						<div v-show="disease.checked">
+						<div v-if="disease.checked">
 							<span class="span2">{{ disease.name }}(은/는) 몇 년 전에 진단 받으셨나요?</span>
 							<input type="number" v-model.number="disease.histroy" />
 							<br />
