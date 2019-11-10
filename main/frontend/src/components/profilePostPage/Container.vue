@@ -78,7 +78,7 @@
 						/>없음
 					</label>
 					<br />
-					<span class="span2" for="had_long_before">건강검진 시기</span>
+					<span class="span2" for="had_long_before" v-show="update.had_checkup">건강검진 시기</span>
 					<br />
 					<input
 						class="select selectline"
@@ -103,33 +103,6 @@
 					<br />
 					<span class="span2" for="disease_list">병 진단 이력</span>
 					<br />
-					<!-- <input type="checkbox" class="select selectline" v-model="update.diagnosed_disease" /> -->
-					<!-- <input
-						type="checkbox"
-						class="select selectline"
-						v-for="(element, index)  in update.diagnosed_disease"
-						v-model="element.checked"
-						:key="index"
-					/>{{ element }} -->
-
-					<!-- <template v-for="(disease, index) in update.diagnosed_disease">
-						<input
-							type="checkbox"
-							class="select selectline"
-							:key="index"
-							@click="ClickDisease(label[index], index)"
-							:value="label[index]"
-						/>{{ label[index] }}
-					</template> -->
-					<!-- <template v-for="(disease, index) in update.diagnosed_disease">
-						<input
-							type="checkbox"
-							:key="index"
-							:value="disease"
-							@click="clickDisease(disease)"
-							class="select selectline"
-						/>{{ disease }}
-					</template> -->
 					<input
 						type="radio"
 						:value="true"
@@ -140,56 +113,19 @@
 						type="radio"
 						name="disease_boolean"
 						:value="false"
+						@click="initiateDiagnosedDisease()"
 						v-model="update.disease_boolean"
 					/>
 					없음
-					<span v-show="update.disease_boolean" v-for="disease in diseaseLabel" :key="disease">
-						<input
-							type="checkbox"
-							:name="disease"
-							:value="disease"
-							v-model="update.diagnosed_disease"
-						/>
-						<label :for="disease">{{ disease }}</label>
-					</span>
-					<template name="diseaseIF" v-if="update.diagnosed_disease">
-						<div v-if="update.diagnosed_disease.includes('고혈압')">
-							고혈압
-						</div>
-						<div v-if="update.diagnosed_disease.includes('간염')">
-							간염
-						</div>
+
+					<template v-if="update.disease_boolean">
+						<span v-for="disease in update.diagnosed_disease" :key="disease.name">
+							<input type="checkbox" :name="disease" v-model="disease.checked" />
+							<label v-if="!disease.label" :for="disease">{{ disease.name }}</label>
+							<label v-else :for="disease">기타</label>
+						</span>
 					</template>
-					<!-- <input
-						type="checkbox"
-						class="select selectline"
-						value="고혈압"
-						v-model="update.diagnosed_disease"
-					/>고혈압
-					<input
-						class="select selectline"
-						value="간염"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>간염
-					<input
-						class="select selectline"
-						value="결핵"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>결핵
-					<input
-						class="select selectline"
-						value="없음"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>없음
-					<input
-						class="select selectline"
-						value="기타"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>기타 -->
+
 					<br />
 					<!-- <input type="text" v-if="update.diagnosed_disease.indexOf('기타') >= 0" /> -->
 					<!-- <input type="text" v-show="diagnosed_disease_rest" v-model="diagnosed_disease_restText" /> -->
@@ -448,8 +384,9 @@ export default {
 			this.$store.dispatch('postProfileInfo', this.update);
 		},
 		initiateDiagnosedDisease() {
-			this.update.diagnosed_disease = [];
-			console.log(this.update.diagnosed_disease);
+			this.update.diagnosed_disease.forEach(disease => {
+				disease.checked = false;
+			});
 		},
 	},
 };

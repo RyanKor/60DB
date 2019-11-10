@@ -73,69 +73,54 @@
 							type="radio"
 							v-model="update.had_checkup"
 							name="had_checkup"
+							@click="
+								deleteProperty('had_checkup');
+								deleteProperty('had_checkup_comment');
+							"
 							id="no"
 							:value="false"
 						/>없음
 					</label>
 					<br />
-					<span class="span2" for="had_long_before" v-show="update.had_checkup">건강검진 시기</span>
-					<br />
-					<input
-						class="select selectline"
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="1년 이내"
-					/>1년 이내
-					<input
-						class="select selectline"
-						cd
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="1-3년"
-					/>1~3년
-					<input class="select" type="radio" v-model="update.had_checkup_true" value="3-5년" />3~5년
-					<input
-						class="select"
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="5-10년"
-					/>5~10년
-					<span class="span2">건강검진-이상소견</span>
-					<input
-						type="text"
-						placeholder="ex)갑상선 수치에 이상이 있어요"
-						v-model="update.had_checkup_comment"
-					/>
+					<span class="span2" for="had_long_before" v-show="update.had_checkup"
+						>건강검진 시기
+						<br />
+						<input
+							class="select selectline"
+							type="radio"
+							v-model="update.had_checkup_true"
+							value="1년 이내"
+						/>1년 이내
+						<input
+							class="select selectline"
+							cd
+							type="radio"
+							v-model="update.had_checkup_true"
+							value="1-3년"
+						/>1~3년
+						<input
+							class="select"
+							type="radio"
+							v-model="update.had_checkup_true"
+							value="3-5년"
+						/>3~5년
+						<input
+							class="select"
+							type="radio"
+							v-model="update.had_checkup_true"
+							value="5-10년"
+						/>5~10년
+
+						<span class="span2">건강검진-이상소견</span>
+						<input
+							type="text"
+							placeholder="ex)갑상선 수치에 이상이 있어요"
+							v-model="update.had_checkup_comment"
+						/>
+					</span>
 					<br />
 					<span class="span2" for="disease_list">병 진단 이력</span>
 					<br />
-					<!-- <input type="checkbox" class="select selectline" v-model="update.diagnosed_disease" /> -->
-					<!-- <input
-						type="checkbox"
-						class="select selectline"
-						v-for="(element, index)  in update.diagnosed_disease"
-						v-model="element.checked"
-						:key="index"
-					/>{{ element }} -->
-
-					<!-- <template v-for="(disease, index) in update.diagnosed_disease">
-						<input
-							type="checkbox"
-							class="select selectline"
-							:key="index"
-							@click="ClickDisease(label[index], index)"
-							:value="label[index]"
-						/>{{ label[index] }}
-					</template> -->
-					<!-- <template v-for="(disease, index) in update.diagnosed_disease">
-						<input
-							type="checkbox"
-							:key="index"
-							:value="disease"
-							@click="clickDisease(disease)"
-							class="select selectline"
-						/>{{ disease }}
-					</template> -->
 					<input
 						type="radio"
 						:value="true"
@@ -151,53 +136,35 @@
 					/>
 					없음
 
+					<!-- <div v-if="update.diagnosed_disease[3].checked">
+						<span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
+						<input type="text" placeholder="ex)대장암" v-model="update.diagnosed_disease[3].name" />
+						<br />
+					</div> -->
+
 					<template v-if="update.disease_boolean">
-						<span v-for="disease in update.diagnosed_disease" :key="disease">
+						<span v-for="disease in update.diagnosed_disease" :key="disease.name">
 							<input type="checkbox" :name="disease" v-model="disease.checked" />
 							<label v-if="!disease.label" :for="disease">{{ disease.name }}</label>
 							<label v-else :for="disease">기타</label>
 						</span>
 					</template>
 
-					<div v-if="update.diagnosed_disease[3].checked">
-						<span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
-						<input type="text" placeholder="ex)대장암" v-model="update.diagnosed_disease[3].name" />
-						<br />
-						<!-- <span class="span2"
-							>{{ update.diagnosed_disease[3].disease }}(은/는) 몇 년 전에 진단 받으셨나요?</span
-						>
-						<input
-							type="number"
-							placeholder="년 단위의 숫자를 입력해주세요"
-							v-model="update.diagnosed_disease[3].history"
-						/>
-						<br />
-						<span class="span2"
-							>{{ update.diagnosed_disease[3].disease }} 때문에 드시고 계신 약이 있다면
-							적어주세요</span
-						>
-						<input
-							type="text"
-							placeholder="드시고 계신 약이 없다면 생략해주세요"
-							v-model="update.diagnosed_disease[3].medicine"
-						/>
-						<br />
-						<span class="span2"
-							>{{ update.diagnosed_disease[3].disease }}(은/는) 어디서 진단 받으셨나요?</span
-						>
-						<input
-							type="text"
-							placeholder="기억나지 않는다면 생략해주세요"
-							v-model="update.diagnosed_disease[3].where"
-						/>
-						<br /> -->
-					</div>
 					<!-- <div v-else-if="update.diagnosed_disease.includes('없음')"></div> -->
-					<div v-for="disease in update.diagnosed_disease" :key="disease.name">
+					<div v-for="(disease, index) in update.diagnosed_disease" :key="`disease.name${index}`">
 						<!-- 인우 : v-for문 안에서 v-model 어떻게 설정하는지 몰라서 일단 놔뒀습니다.
               노드 백 가보시면 제가 diagnosed_disease관련해서 모델 확장해놨어요
               모델명은 그거 참고하시면 될 것 같습니다.-->
 						<div v-if="disease.checked">
+							<div v-if="index === 3 && update.diagnosed_disease[index].checked">
+								<span class="span2">어떤 병을 진단 받으셨는지 자유롭게 기술해주세요</span>
+								<input
+									type="text"
+									placeholder="ex)대장암"
+									v-model="update.diagnosed_disease[3].name"
+								/>
+								<br />
+							</div>
 							<span class="span2">{{ disease.name }}(은/는) 몇 년 전에 진단 받으셨나요?</span>
 							<input type="number" v-model.number="disease.histroy" />
 							<br />
@@ -447,6 +414,10 @@ export default {
 			this.update.diagnosed_disease.forEach(disease => {
 				disease.checked = false;
 			});
+		},
+		deleteProperty() {
+			delete this.update.had_checkup_true;
+			delete this.update.had_checkup_comment;
 		},
 	},
 };
