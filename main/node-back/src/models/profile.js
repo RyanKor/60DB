@@ -123,6 +123,9 @@ const profileSchema = new mongoose.Schema({
     type : Array,
     default : [],
   },
+  allergy_other : {
+    type : String,
+  },
   coffee : {
     type : String,
     // required : true,
@@ -168,10 +171,10 @@ const profileSchema = new mongoose.Schema({
     //default : "",
     // required : true,
   },
-  how_much_smoking_before : {
-    type : String,
-    //default : "",
-  },
+  // how_much_smoking_before : {
+  //   type : String,
+  //   //default : "",
+  // },
   quit_smoking : {
     type : String,
     //default : "",
