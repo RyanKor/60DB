@@ -83,8 +83,9 @@
 					</label>
 					<br />
 					<span class="span2" for="had_long_before" v-show="update.had_checkup"
-						>마지막으로 건강검진 받은 시기</span
-					>
+						>마지막으로 건강검진 받은 시기
+						<input type="text" v-model="update.checkup_history" />
+					</span>
 					<br />
 					<input
 						class="select selectline"
@@ -208,9 +209,14 @@
 					<!-- <input type="text" v-if="update.diagnosed_disease.indexOf('기타') >= 0" /> -->
 					<!-- <input type="text" v-show="diagnosed_disease_rest" v-mo
           del="diagnosed_disease_restText" />-->
-					<span class="span2">복용중인 약</span>
+					<span class="span2">
+						<template v-for="disease in update.diagnosed_disease">
+							<span v-show="disease.checked">{{ disease.name, }}</span>
+						</template>
+						이외 복용중인 약
+					</span>
 					<br />
-					<label for="yes">
+					<!-- <label for="yes">
 						<input
 							class="select selectline"
 							type="radio"
@@ -229,11 +235,20 @@
 							id="no"
 							:value="false"
 						/>없음
-					</label>
+					</label> -->
 					<br />
-					<span>약 이름</span>
-					<input type="text" ref="what_medicine" v-model="update.what_medicine" />
+					<input type="text" ref="other_medicine" v-model="update.other_medicine" />
 
+					<span> 복용중인 건강식품</span>
+
+					<span v-for="element in healthy" :key="element">
+						<input
+							class="select selectline"
+							type="radio"
+							v-model="update.taking_healthy"
+							:value="element"
+						/>{{ element }}
+					</span>
 					<span for="family_disease">가족력</span>
 					<br />
 					<span v-for="(disease, index) in diseaseLabel" :key="index">
@@ -245,6 +260,7 @@
 						/>
 						<label :for="disease">{{ disease }}</label>
 					</span>
+
 					<br />
 					<span>알레르기 이력(없으면 생략해주세요)</span>
 					<!-- 인우 : '없음'을 안 넣고 싶어서 일단 이렇게 했는데 혹시 모르겠네요 필요한건지 -->
@@ -437,6 +453,7 @@ export default {
 			disease_boolean: '',
 			disease_other: '',
 			allergyLabel: ['비염', '피부염', '천식', '기타 알레르기'],
+			healthy: ['비타민제', '한약', '기타'],
 			diseaseLabel: ['고혈압', '간염', '결핵', '없음', '기타'],
 			factorLabel: [
 				'스트레스를 많이 받는 편',

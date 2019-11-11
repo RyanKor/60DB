@@ -55,6 +55,9 @@ const profileSchema = new mongoose.Schema({
     type : String,
     //default : "",
   },
+  checkup_history : {
+    type : String,
+  },
   disease_boolean : {
     type: Boolean,
   },
@@ -106,8 +109,8 @@ const profileSchema = new mongoose.Schema({
     // ],
     // required : true,
   },
-  taking_medicine : {
-    type : Boolean,
+  other_medicine : {
+    type : String,
     //default : "",
     required : true,
   },
@@ -136,11 +139,11 @@ const profileSchema = new mongoose.Schema({
     // required : true,
     // default : false,
   },
-  what_medicine : {
-    type : String,
-    //default : "",
-    // required : true,
-  },
+  // what_medicine : {
+  //   type : String,
+  //   //default : "",
+  //   // required : true,
+  // },
   family_history : {
     type : Array,
     default : [],
