@@ -116,15 +116,15 @@ const profileSchema = new mongoose.Schema({
   },
   taking_healthy : {
     type : Array,
-    default : [],
+    // default : [],
   },
   family_history_true : {
     type : Array,
-    default : [],
+    // default : [],
   },
   allergy : {
     type : Array,
-    default : [],
+    // default : [],
   },
   allergy_other : {
     type : String,
@@ -146,7 +146,7 @@ const profileSchema = new mongoose.Schema({
   // },
   family_history : {
     type : Array,
-    default : [],
+    // default : [],
     // required : true,
   },
   drinking : {
@@ -189,7 +189,7 @@ const profileSchema = new mongoose.Schema({
   },
   relevant_data : {
     type : Array,
-    default : [],
+    // default : [],
   },
 
 })

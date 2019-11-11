@@ -185,40 +185,7 @@
 							<br />
 						</div>
 					</div>
-					<!-- <input
-						type="checkbox"
-						class="select selectline"
-						value="고혈압"
-						v-model="update.diagnosed_disease"
-					/>고혈압
-					<input
-						class="select selectline"
-						value="간염"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>간염
-					<input
-						class="select selectline"
-						value="결핵"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>결핵
-					<input
-						class="select selectline"
-						value="없음"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-					/>없음
-					<input
-						class="select selectline"
-						value="기타"
-						type="checkbox"
-						v-model="update.diagnosed_disease"
-          />기타-->
 					<br />
-					<!-- <input type="text" v-if="update.diagnosed_disease.indexOf('기타') >= 0" /> -->
-					<!-- <input type="text" v-show="diagnosed_disease_rest" v-mo
-          del="diagnosed_disease_restText" />-->
 					<span class="span2">
 						<template v-for="disease in update.diagnosed_disease">
 							<span v-show="disease.checked">{{ disease.name, }}</span>
@@ -226,26 +193,6 @@
 						이외 복용중인 약
 					</span>
 					<br />
-					<!-- <label for="yes">
-						<input
-							class="select selectline"
-							type="radio"
-							v-model="update.taking_medicine"
-							name="taking_medicine"
-							id="yes"
-							:value="true"
-						/>있음
-					</label>
-					<label for="no">
-						<input
-							class="select"
-							type="radio"
-							v-model="update.taking_medicine"
-							name="taking_medicine"
-							id="no"
-							:value="false"
-						/>없음
-					</label> -->
 					<br />
 					<input type="text" ref="other_medicine" v-model="update.other_medicine" />
 
@@ -271,6 +218,16 @@
 						<label :for="disease">{{ disease }}</label>
 					</span>
 
+					<div v-show="update.family_history.length">
+						<span v-for="history in family_history" :key="history">
+							<input
+								type="checkbox"
+								:name="history"
+								:value="history"
+								v-model="update.family_history_true"
+							/>{{ history }}
+						</span>
+					</div>
 					<br />
 					<span>알레르기 이력(없으면 생략해주세요)</span>
 					<!-- 인우 : '없음'을 안 넣고 싶어서 일단 이렇게 했는데 혹시 모르겠네요 필요한건지 -->
@@ -448,7 +405,9 @@
 	</div>
 </template>
 <script>
+import profileMixin from '../../mixin/profileMixin.js';
 export default {
+	mixins: [profileMixin],
 	// computed: {
 	// 	profile: function() {
 	// 		return { ...this.$store.state.profile };
@@ -460,31 +419,11 @@ export default {
 	data() {
 		return {
 			update: {},
-			disease_boolean: '',
-			disease_other: '',
-			allergyLabel: ['비염', '피부염', '천식', '기타 알레르기'],
-			healthy: ['비타민제', '한약', '기타'],
-			diseaseLabel: ['고혈압', '간염', '결핵', '없음', '기타'],
-			factorLabel: [
-				'스트레스를 많이 받는 편',
-				'식사 불규칙',
-				'기름진 음식을 많이 먹음',
-				'수면시간 불규칙',
-			],
 		};
 	},
 	methods: {
 		updateProfileInfo() {
-			// if (this.disease_other) this.update.disease_other = this.disease_other;
 			this.$store.dispatch('updateProfileInfo', this.update);
-		},
-		initiateDiagnosedDisease() {
-			this.update.diagnosed_disease.forEach(disease => {
-				disease.checked = false;
-			});
-		},
-		deleteProperty(property) {
-			delete this.update[property];
 		},
 	},
 };
