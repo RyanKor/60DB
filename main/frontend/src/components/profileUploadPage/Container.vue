@@ -74,7 +74,7 @@
 							v-model="update.had_checkup"
 							name="had_checkup"
 							@click="
-								deleteProperty('had_checkup');
+								deleteProperty('checkup_history');
 								deleteProperty('had_checkup_comment');
 							"
 							id="no"
@@ -82,49 +82,59 @@
 						/>없음
 					</label>
 					<br />
-					<span class="span2" for="had_long_before" v-show="update.had_checkup"
-						>마지막으로 건강검진 받은 시기
-						<input type="text" v-model="update.checkup_history" />
-					</span>
-					<br />
-					<input
-						class="select selectline"
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="1년 이내"
-					/>1년 이내
-					<input
-						class="select selectline"
-						cd
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="1-3년"
-					/>1~3년
-					<input class="select" type="radio" v-model="update.had_checkup_true" value="3-5년" />3~5년
-					<input
-						class="select"
-						type="radio"
-						v-model="update.had_checkup_true"
-						value="5-10년"
-					/>5~10년
-					<span class="span2">건강검진-이상소견</span>
-					<input
-						type="text"
-						placeholder="ex)갑상선 수치에 이상이 있어요"
-						v-model="update.had_checkup_comment"
-					/>
+					<div v-show="update.had_checkup">
+						<span class="span2" for="had_long_before"
+							>마지막으로 건강검진 받은 시기
+							<!-- <input type="text" v-model="update.checkup_history" /> -->
+						</span>
+						<br />
+						<input
+							class="select selectline"
+							name="checkup_history"
+							type="radio"
+							v-model="update.checkup_history"
+							value="1년 이내"
+						/>1년 이내
+						<input
+							class="select selectline"
+							name="checkup_history"
+							type="radio"
+							v-model="update.checkup_history"
+							value="1-3년"
+						/>1~3년
+						<input
+							class="select"
+							type="radio"
+							name="checkup_history"
+							v-model="update.checkup_history"
+							value="3-5년"
+						/>3~5년
+						<input
+							class="select"
+							type="radio"
+							name="checkup_history"
+							v-model="update.checkup_history"
+							value="5-10년"
+						/>5~10년
+						<span class="span2">건강검진-이상소견</span>
+						<input
+							type="text"
+							placeholder="ex)갑상선 수치에 이상이 있어요"
+							v-model="update.had_checkup_comment"
+						/>
+					</div>
 					<br />
 					<span class="span2" for="disease_list">병 진단 이력</span>
 					<br />
 					<input
 						type="radio"
 						:value="true"
-						name="had_checkup"
+						name="disease_boolean"
 						v-model="update.disease_boolean"
 					/>있음
 					<input
 						type="radio"
-						name="had_checkup"
+						name="disease_boolean"
 						@click="initiateDiagnosedDisease()"
 						:value="false"
 						v-model="update.disease_boolean"
@@ -473,9 +483,8 @@ export default {
 				disease.checked = false;
 			});
 		},
-		deleteProperty() {
-			delete this.update.had_checkup_true;
-			delete this.update.had_checkup_comment;
+		deleteProperty(property) {
+			delete this.update[property];
 		},
 	},
 };

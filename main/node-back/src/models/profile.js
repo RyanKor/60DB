@@ -112,7 +112,7 @@ const profileSchema = new mongoose.Schema({
   other_medicine : {
     type : String,
     //default : "",
-    required : true,
+    // required : true,
   },
   taking_healthy : {
     type : Array,
