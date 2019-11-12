@@ -11,12 +11,16 @@
   </div>
 </template>
 <script>
-import profileMixin from "../../mixin/profileMixin.js";
 import BasicInfo from "./BasicInfo.js";
 import History from "./History";
 import Social from "./Social";
 
 export default {
+  components: {
+    BasicInfo,
+    History,
+    Social
+  },
   methods: {
     postProfileInfo() {
       this.$store.dispatch("postProfileInfo", this.update);
