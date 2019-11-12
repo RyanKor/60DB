@@ -71,7 +71,6 @@ export default {
 		username() {
 			return localStorage.getItem('username');
 		},
-		// ...mapState(['isLogin', 'isLoginError', 'userInfo']),
 	},
 	methods: {
 		...mapActions(['getMemberInfo', 'logout']),

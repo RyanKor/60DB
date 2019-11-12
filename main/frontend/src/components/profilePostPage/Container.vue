@@ -472,32 +472,32 @@ export default {
 	data() {
 		return {
 			update: {
-				taking_healthy: [],
-				family_history_true: [],
-				diagnosed_disease: [
-					{
-						name: '고혈압',
-						checked: false,
-					},
-					{
-						name: '간염',
-						checked: false,
-					},
-					{
-						name: '결핵',
-						checked: false,
-					},
-					{
-						name: '',
-						label: '기타',
-						checked: false,
-					},
-				],
-				allergy: [],
-				family_history: [],
-				famil_history_true: [],
-				relevant_data: [],
-				smoking: '',
+				// taking_healthy: [],
+				// family_history_true: [],
+				// diagnosed_disease: [
+				// 	{
+				// 		name: '고혈압',
+				// 		checked: false,
+				// 	},
+				// 	{
+				// 		name: '간염',
+				// 		checked: false,
+				// 	},
+				// 	{
+				// 		name: '결핵',
+				// 		checked: false,
+				// 	},
+				// 	{
+				// 		name: '',
+				// 		label: '기타',
+				// 		checked: false,
+				// 	},
+				// ],
+				// allergy: [],
+				// family_history: [],
+				// famil_history_true: [],
+				// relevant_data: [],
+				// smoking: '',
 			},
 		};
 	},
