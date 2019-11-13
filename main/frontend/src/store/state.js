@@ -2,10 +2,11 @@ export default {
 	userInfo: null,
 	isLogin: 'false',
 	isLoginError: 'false',
-	// profile: {},
+	profile: {},
 	// stomach: {},
 	// survey_history: [],
 	// random_user: {},
 	// answer: {},
+	click_profile: false,
 	isloading: false,
 };

@@ -17,6 +17,9 @@ import {
 import { SessionExpired, LoginSuccess } from './actions-fun.js';
 import { rejects } from 'assert';
 export default {
+	setProfileData({ commit }, profile) {
+		commit('COMBINE_PROFILE', profile);
+	},
 	login({ commit }, loginObj) {
 		commit('SET_LOADING', true);
 		Login(loginObj)
@@ -239,16 +242,18 @@ export default {
 			name: 'signup',
 		});
 	},
-	async postProfileInfo({ commit }, update) {
+	async postProfileInfo({ commit }) {
 		commit('SET_LOADING', true);
+		commit('SET_CLICK_PROFILE', true);
 		try {
-			await postProfileInfo(update);
+			await postProfileInfo(this.state.profile);
 			const profile = await getProfileInfo();
 			commit('SET_PROFILE', profile.data);
 			router.push({
 				name: 'profiles',
 			});
 		} catch (e) {
+			commit('SET_CLICK_PROFILE', false);
 			if (e.response.status === 400) {
 				alert('다시 입력해주세요');
 				this.commit('SET_LOADING', false);
@@ -290,4 +295,10 @@ export default {
 	alreadyLogin({ commit }) {
 		commit('ALREADY_LOGIN');
 	},
+	// set_click_profile({ commit }, value) {
+	// 	commit('SET_CLICK_PROFILE', value);
+	// 	return new Promise((resolve, reject) => {
+	// 		resolve('succes');
+	// 	});
+	// },
 };

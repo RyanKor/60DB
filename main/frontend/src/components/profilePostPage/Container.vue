@@ -13,15 +13,23 @@
 	</div>
 </template>
 <script>
-import profileMixin from '../../mixin/profileMixin.js';
-import BasicInfo from './BasicInfo.js';
-import History from './History';
-import Social from './Social';
+import BasicInfo from './BasicInfo.vue';
+import History from './History.vue';
+import Social from './Social.vue';
 
 export default {
+	components: {
+		BasicInfo,
+		History,
+		Social,
+	},
 	methods: {
 		postProfileInfo() {
-			this.$store.dispatch('postProfileInfo', this.update);
+			this.$store.dispatch('postProfileInfo');
+			// this.$store.commit('SET_CLICK_PROFILE', true);
+			// setTimeout(() => {
+			// 	this.$store.dispatch('postProfileInfo', this.$store.state.profile);
+			// }, 500);
 		},
 	},
 };
