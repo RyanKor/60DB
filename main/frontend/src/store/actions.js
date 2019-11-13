@@ -245,6 +245,7 @@ export default {
 	async postProfileInfo({ commit }) {
 		commit('SET_LOADING', true);
 		commit('SET_CLICK_PROFILE', true);
+		commit('SET_CLICK_PROFILE', false);
 		try {
 			await postProfileInfo(this.state.profile);
 			const profile = await getProfileInfo();

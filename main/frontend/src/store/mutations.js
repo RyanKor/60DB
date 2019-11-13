@@ -56,12 +56,17 @@ export default {
 	SET_LOADING(state, isloading) {
 		state.isloading = isloading;
 	},
+	SET_COMBINE_NUM(state) {
+		state.combineNum = 0;
+	},
 	COMBINE_PROFILE(state, profile) {
 		state.profile = Object.assign(state.profile, profile);
+		state.combineNum++;
 	},
 	SET_CLICK_PROFILE(state, value) {
 		state.click_profile = value;
 	},
+
 	// SET_TOKEN(state) {
 	// 	state.token = localStorage.getItem('access_token');
 	// },
