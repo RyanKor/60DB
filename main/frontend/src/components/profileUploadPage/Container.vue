@@ -408,11 +408,7 @@
 import profileMixin from '../../mixin/profileMixin.js';
 export default {
 	mixins: [profileMixin],
-	// computed: {
-	// 	profile: function() {
-	// 		return { ...this.$store.state.profile };
-	// 	},
-	// },
+
 	created() {
 		this.update = { ...this.$store.state.profile };
 	},
