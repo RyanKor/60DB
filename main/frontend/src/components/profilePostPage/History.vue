@@ -162,7 +162,7 @@
 						</div>
 					</div>
 				</div>
-				<div v-for="(disease, index) in update.diagnosed_disease" :key="`${disease.name}${index}`">
+				<div v-for="(disease, index) in update.diagnosed_disease" :key="disease.name">
 					<div v-if="disease.checked">
 						<div class="textbox__wrap">
 							<div v-if="index === 3">
@@ -217,7 +217,7 @@
 				</div>
 				<div class="textbox">
 					<div class="base__head inline">
-						<span v-for="disease in update.diagnosed_disease" :key="disease">
+						<span v-for="disease in update.diagnosed_disease" :key="disease.name">
 							<span v-show="disease.checked">
 								<span class="base__hilight">{{ disease.name }}</span
 								>&nbsp;
