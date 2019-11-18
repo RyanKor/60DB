@@ -28,7 +28,10 @@
                   type="radio"
                   v-model="update.had_checkup"
                   name="had_checkup"
-                  @click="deleteProperty('checkup_history');deleteProperty('had_checkup_comment');"
+                  @click="
+										deleteProperty('checkup_history');
+										deleteProperty('had_checkup_comment');
+									"
                   id="no"
                   :value="false"
                 />없음
@@ -159,7 +162,7 @@
             </div>
           </div>
         </div>
-        <div v-for="(disease, index) in update.diagnosed_disease" :key="`disease.name${index}`">
+        <div v-for="(disease, index) in update.diagnosed_disease" :key="`${disease.name}${index}`">
           <div v-if="disease.checked">
             <div class="textbox__wrap">
               <div v-if="index === 3">
@@ -175,7 +178,7 @@
               </div>
               <div class="textbox">
                 <span class="base__head">
-                  <span class="base__hilight">{{disease.name }}</span>(은/는) 몇 년 전에 진단 받으셨나요?(년)
+                  <span class="base__hilight">{{ disease.name }}</span>(은/는) 몇 년 전에 진단 받으셨나요?(년)
                 </span>
                 <input
                   class="textbox__input"
@@ -186,7 +189,7 @@
               </div>
               <div class="textbox">
                 <span class="base__head">
-                  <span class="base__hilight">{{disease.name }}</span>과 관련하여 복용중인 약을 적어주세요
+                  <span class="base__hilight">{{ disease.name }}</span>과 관련하여 복용중인 약을 적어주세요
                 </span>
                 <input
                   class="textbox__input"
@@ -197,7 +200,7 @@
               </div>
               <div class="textbox">
                 <span class="base__head">
-                  <span class="base__hilight">{{disease.name }}</span>(은/는) 어디서 진단 받으셨나요?
+                  <span class="base__hilight">{{ disease.name }}</span>(은/는) 어디서 진단 받으셨나요?
                 </span>
                 <input
                   class="textbox__input"
@@ -213,7 +216,7 @@
           <div class="base__head inline">
             <span v-for="disease in update.diagnosed_disease" :key="disease">
               <span v-show="disease.checked">
-                <span class="base__hilight">{{ disease.name}}</span>&nbsp;
+                <span class="base__hilight">{{ disease.name }}</span>&nbsp;
               </span>
             </span>
             <span class="base__head">이 외 복용중인 약</span>
@@ -300,19 +303,6 @@
 <script>
 import profileMixin from "../../mixin/profileMixin.js";
 export default {
-  computed: {
-    click_profile() {
-      return this.$store.state.click_profile;
-    }
-  },
-  watch: {
-    click_profile(click) {
-      if (click) {
-        this.$store.dispatch("setProfileData", this.update);
-      }
-    }
-  },
-
   data() {
     return {
       update: {
@@ -371,10 +361,36 @@ input::placeholder {
 .base__hilight {
   color: rgb(32, 114, 207);
 }
+.base__hilight--red {
+  color: rgb(218, 51, 51);
+}
 .inline {
   display: inline;
 }
 /* base Info Container1 */
+.guidebox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 1rem;
+  padding: 1rem;
+  border: 1px solid rgb(218, 51, 51);
+  border-radius: 5px;
+}
+.guidebox__title {
+  color: rgb(218, 51, 51);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.guidebox__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .base-info__cont1 {
   padding: 0 1.6rem;
 }
@@ -399,6 +415,14 @@ input::placeholder {
   flex-direction: column;
   margin: 0.8rem 0;
 }
+.textbox--2 {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgb(52, 121, 250);
+  border-radius: 5px;
+}
 .textbox__input {
   outline: none;
   width: 100%;
@@ -411,6 +435,14 @@ input::placeholder {
 .textbox__input:focus {
   border: 2px solid rgb(52, 121, 250);
   transition: 0.5s;
+}
+.textbox__input--2 {
+  width: 25%;
+  height: 36px;
+  margin: 0 0.5rem;
+}
+.textbox__inputbox {
+  margin: 0.3rem 0;
 }
 .textbox__wrap {
   border: 1px solid rgb(52, 121, 250);
@@ -479,4 +511,3 @@ input::placeholder {
   padding: 0.7rem;
 }
 </style>
-

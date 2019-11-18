@@ -192,19 +192,6 @@
 <script>
 import profileMixin from "../../mixin/profileMixin.js";
 export default {
-  computed: {
-    click_profile() {
-      return this.$store.state.click_profile;
-    }
-  },
-  watch: {
-    click_profile(click) {
-      if (click) {
-        this.$store.dispatch("setProfileData", this.update);
-      }
-    }
-  },
-
   data() {
     return {
       update: {
@@ -216,7 +203,6 @@ export default {
   mixins: [profileMixin]
 };
 </script>
-
 
 <style scoped>
 /* base */
@@ -363,5 +349,3 @@ input::placeholder {
   padding: 0.7rem;
 }
 </style>
-
-
