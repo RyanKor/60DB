@@ -21,7 +21,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 850px;
+  min-height: 1000px;
   color: #fff;
   background: linear-gradient(-45deg, #0e2b68, #22499c, #27adab, #71fcf9);
   background-size: 400% 400%;
