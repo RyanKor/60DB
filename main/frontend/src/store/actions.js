@@ -255,7 +255,7 @@ export default {
 			});
 		} catch (e) {
 			if (e.response.status === 400) {
-				alert('다시 입력해주세요');
+				alert('필수 문항을 전부 입력해주세요.');
 				this.commit('SET_LOADING', false);
 			} else if (e.response.status === 401) SessionExpired();
 		}

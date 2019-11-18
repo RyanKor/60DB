@@ -97,18 +97,6 @@
 <script>
 import profileMixin from '../../mixin/profileMixin.js';
 export default {
-	// computed: {
-	// 	click_profile() {
-	// 		return this.$store.state.click_profile;
-	// 	},
-	// },
-	// watch: {
-	// 	click_profile(click) {
-	// 		if (click) {
-	// 			this.$store.commit('COMBINE_PROFILE', this.update);
-	// 		}
-	// 	},
-	// },
 	mixins: [profileMixin],
 
 	data() {

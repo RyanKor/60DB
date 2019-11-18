@@ -36,12 +36,7 @@ export default {
 	},
 	methods: {
 		postProfileInfo() {
-			console.log('asdf');
-			// this.$store.dispatch('postProfileInfo');
 			this.$store.commit('SET_CLICK_PROFILE', true);
-			// setTimeout(() => {
-			// 	this.$store.dispatch('postProfileInfo', this.$store.state.profile);
-			// }, 500);
 		},
 	},
 };
