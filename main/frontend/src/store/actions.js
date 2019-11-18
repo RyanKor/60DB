@@ -247,8 +247,7 @@ export default {
 		commit('SET_COMBINE_PROFILE', 0);
 		commit('SET_CLICK_PROFILE', false);
 		try {
-			await postProfileInfo(this.state.profile);
-			const profile = await getProfileInfo();
+			const profile = await postProfileInfo(this.state.profile);
 			commit('SET_PROFILE', profile.data);
 			router.push({
 				name: 'profiles',
@@ -263,9 +262,7 @@ export default {
 	async updateProfileInfo({ commit }, update) {
 		commit('SET_LOADING', true);
 		try {
-			await updateProfileInfo(update);
-			const profile = await getProfileInfo();
-			// console.log(profile);
+			const profile = await updateProfileInfo(update);
 			commit('SET_PROFILE', profile.data);
 			router.push({
 				name: 'profiles',

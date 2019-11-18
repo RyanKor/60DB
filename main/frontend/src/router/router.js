@@ -140,7 +140,7 @@ const routes = [
 
       if(requireAuth() === 'login')
       {
-        if(!store.state.profile)
+        if(!Object.keys(store.state.profile).length)
           await store.dispatch("getProfileInfo")
         next();
       }
