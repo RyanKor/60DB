@@ -187,10 +187,11 @@ input::placeholder {
 	border: 1px solid rgb(209, 209, 209);
 	border-radius: 5px;
 	padding: 0.7rem;
+	background-color: rgb(241, 241, 241);
 }
 .textbox__input:focus {
 	border: 2px solid rgb(52, 121, 250);
-	transition: 0.5s;
+	transition: 0.3s;
 }
 /* Radiobox */
 .radiobox {

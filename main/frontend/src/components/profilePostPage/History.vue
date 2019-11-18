@@ -162,7 +162,7 @@
 						</div>
 					</div>
 				</div>
-				<div v-for="(disease, index) in update.diagnosed_disease" :key="disease.name">
+				<div v-for="(disease, index) in update.diagnosed_disease" :key="`${disease.name}${index}`">
 					<div v-if="disease.checked">
 						<div class="textbox__wrap">
 							<div v-if="index === 3">
@@ -217,7 +217,7 @@
 				</div>
 				<div class="textbox">
 					<div class="base__head inline">
-						<span v-for="disease in update.diagnosed_disease" :key="disease.name">
+						<span v-for="disease in update.diagnosed_disease" :key="disease">
 							<span v-show="disease.checked">
 								<span class="base__hilight">{{ disease.name }}</span
 								>&nbsp;
@@ -365,10 +365,36 @@ input::placeholder {
 .base__hilight {
 	color: rgb(32, 114, 207);
 }
+.base__hilight--red {
+	color: rgb(218, 51, 51);
+}
 .inline {
 	display: inline;
 }
 /* base Info Container1 */
+.guidebox {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1rem 1rem;
+	padding: 1rem;
+	border: 1px solid rgb(218, 51, 51);
+	border-radius: 5px;
+}
+.guidebox__title {
+	color: rgb(218, 51, 51);
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+.guidebox__body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
 .base-info__cont1 {
 	padding: 0 1.6rem;
 }
@@ -393,6 +419,14 @@ input::placeholder {
 	flex-direction: column;
 	margin: 0.8rem 0;
 }
+.textbox--2 {
+	padding-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border: 1px solid rgb(52, 121, 250);
+	border-radius: 5px;
+}
 .textbox__input {
 	outline: none;
 	width: 100%;
@@ -400,10 +434,19 @@ input::placeholder {
 	border: 1px solid rgb(209, 209, 209);
 	border-radius: 5px;
 	padding: 0.7rem;
+	background-color: rgb(241, 241, 241);
 }
 .textbox__input:focus {
 	border: 2px solid rgb(52, 121, 250);
 	transition: 0.5s;
+}
+.textbox__input--2 {
+	width: 25%;
+	height: 36px;
+	margin: 0 0.5rem;
+}
+.textbox__inputbox {
+	margin: 0.3rem 0;
 }
 .textbox__wrap {
 	border: 1px solid rgb(52, 121, 250);
