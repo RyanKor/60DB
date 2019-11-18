@@ -35,7 +35,7 @@ export default {
 
 				if (loginObj.from_signup) {
 					router.push({
-						name: 'profileupdate',
+						name: 'profilepost',
 					});
 				} else
 					router.push({
@@ -244,7 +244,7 @@ export default {
 	},
 	async postProfileInfo({ commit }) {
 		commit('SET_LOADING', true);
-		commit('SET_CLICK_PROFILE', true);
+		commit('SET_COMBINE_PROFILE', 0);
 		commit('SET_CLICK_PROFILE', false);
 		try {
 			await postProfileInfo(this.state.profile);
@@ -254,7 +254,6 @@ export default {
 				name: 'profiles',
 			});
 		} catch (e) {
-			commit('SET_CLICK_PROFILE', false);
 			if (e.response.status === 400) {
 				alert('다시 입력해주세요');
 				this.commit('SET_LOADING', false);

@@ -13,6 +13,18 @@ export default {
 			family_history: ['부모', '형제', '4촌 내 친천', '이외 기타'],
 		};
 	},
+	computed: {
+		click_profile() {
+			return this.$store.state.click_profile;
+		},
+	},
+	watch: {
+		click_profile(click) {
+			if (click) {
+				this.$store.commit('COMBINE_PROFILE', this.update);
+			}
+		},
+	},
 	methods: {
 		initiateDiagnosedDisease() {
 			this.update.diagnosed_disease.forEach(disease => {

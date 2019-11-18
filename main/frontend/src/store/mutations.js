@@ -56,12 +56,12 @@ export default {
 	SET_LOADING(state, isloading) {
 		state.isloading = isloading;
 	},
-	SET_COMBINE_NUM(state) {
-		state.combineNum = 0;
+	SET_COMBINE_PROFILE(state, value) {
+		state.combine_profile = value;
 	},
 	COMBINE_PROFILE(state, profile) {
 		state.profile = Object.assign(state.profile, profile);
-		state.combineNum++;
+		state.combine_profile++;
 	},
 	SET_CLICK_PROFILE(state, value) {
 		state.click_profile = value;

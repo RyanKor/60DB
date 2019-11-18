@@ -23,9 +23,22 @@ export default {
 		History,
 		Social,
 	},
+	computed: {
+		combine_profile() {
+			return this.$store.state.combine_profile;
+		},
+	},
+	watch: {
+		combine_profile(profile) {
+			if (profile === 3) {
+				this.$store.dispatch('postProfileInfo');
+			}
+		},
+	},
 	methods: {
 		postProfileInfo() {
-			this.$store.dispatch('postProfileInfo');
+			this.$store.commit('SET_CLICK_PROFILE', true);
+			// this.$store.dispatch('postProfileInfo');
 			// this.$store.commit('SET_CLICK_PROFILE', true);
 			// setTimeout(() => {
 			// 	this.$store.dispatch('postProfileInfo', this.$store.state.profile);

@@ -177,7 +177,7 @@ const routes = [
         try{
           if(!Object.keys(store.state.profile).length)
             await store.dispatch("getProfileInfo");
-          next();
+          next(); 
         }
         catch(e){
           console.log(e);
@@ -196,7 +196,7 @@ const routes = [
       store.commit('SET_LOADING', true);
 
       if(requireAuth() === 'login'){
-        if(!store.state.profile)
+        if(!Object.keys(store.state.profile).length)
           await store.dispatch("getProfileInfo")
         await store.dispatch("getStomachInfo", to.params.id)
         next();

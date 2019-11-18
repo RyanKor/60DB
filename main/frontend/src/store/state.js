@@ -8,5 +8,6 @@ export default {
 	// random_user: {},
 	// answer: {},
 	click_profile: false,
+	combine_profile: 0,
 	isloading: false,
 };
