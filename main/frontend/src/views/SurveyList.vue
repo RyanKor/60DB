@@ -1,31 +1,32 @@
 <template>
-	<div class="survey-history">
-		<Navbar />
-		<ul>
-			<router-link :to="`/stomach/${item._id}`" v-for="item in survey_history" :key="item.id">
-				증상 : 복통 / <small>작성일 : {{ item.createdAt }}</small>
-				<br />
-				<br />
-			</router-link>
-		</ul>
-	</div>
+  <div class="survey-history">
+    <Navbar />
+    <survey-list></survey-list>
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import Navbar from '../components/homePage/Navbar.vue';
+import { mapState } from "vuex";
+import Navbar from "../components/homePage/Navbar.vue";
+import SurveyList from "../components/SurveyList";
 
 export default {
-	computed: {
-		...mapState(['survey_history']),
-	},
-	mounted() {
-		this.$store.commit('SET_LOADING', false);
-	},
-	components: {
-		Navbar,
-	},
+  computed: {
+    ...mapState(["survey_history"])
+  },
+  mounted() {
+    this.$store.commit("SET_LOADING", false);
+  },
+  components: {
+    Navbar,
+    SurveyList
+  }
 };
 </script>
 
-<style></style>
+<style scoped>
+.survey-history {
+  min-height: 1000px;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+</style>

@@ -158,8 +158,8 @@
 										name="checkup_history"
 										type="radio"
 										v-model="update.checkup_history"
-										value="1-3년"
-									/>1~3년
+										value="1-3년 이내"
+									/>1~3년 이내
 								</div>
 							</label>
 							<label for="3">
@@ -170,8 +170,8 @@
 										type="radio"
 										name="checkup_history"
 										v-model="update.checkup_history"
-										value="3-5년"
-									/>3~5년
+										value="3-5년 이내"
+									/>3~5년 이내
 								</div>
 							</label>
 							<label for="4">
@@ -182,8 +182,8 @@
 										type="radio"
 										name="checkup_history"
 										v-model="update.checkup_history"
-										value="5-10년"
-									/>5~10년
+										value="5-10년 이내"
+									/>5~10년 이내
 								</div>
 							</label>
 						</div>
